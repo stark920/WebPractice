@@ -46,7 +46,7 @@ async function sendPost() {
 
   const option = {
     method: 'post',
-    url: 'http://127.0.0.1:3005/posts',
+    url: 'https://enigmatic-reef-71098.herokuapp.com/posts',
     headers: {
       Authorization: `Bearer ${localStorage.getItem('metaWall')}`,
     },

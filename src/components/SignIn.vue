@@ -14,7 +14,7 @@ onMounted(() => {
   if (!hasToken) return;
 
   axios
-    .get('http://127.0.0.1:3005/users/profile', {
+    .get('https://enigmatic-reef-71098.herokuapp.com/users/profile', {
       headers: {
         Authorization: `Bearer ${hasToken}`,
       },
@@ -69,7 +69,7 @@ function postSignIn() {
   if (!signIn.checkContent()) return;
 
   axios
-    .post('http://127.0.0.1:3005/users/sign_in', {
+    .post('https://enigmatic-reef-71098.herokuapp.com/users/sign_in', {
       email: signIn.email.toLowerCase(),
       password: signIn.password,
     })

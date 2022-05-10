@@ -29,9 +29,11 @@ onMounted(() => {
     },
   };
 
-  axios.get('http://127.0.0.1:3005/posts', token).then((res) => {
-    posts.value = res.data.data;
-  });
+  axios
+    .get('https://enigmatic-reef-71098.herokuapp.com/posts', token)
+    .then((res) => {
+      posts.value = res.data.data;
+    });
 });
 
 function getImagesUrl(images: Array<image | null>) {
@@ -101,7 +103,6 @@ const lightBox = reactive({
         :content="post.content"
         avatar-url="124124"
         :imgUrl="getImagesUrl(post.images)"
-        :likes="post.likes"
         :messages="[
           // {
           //   id: 24247,
