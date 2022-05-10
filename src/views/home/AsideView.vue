@@ -3,6 +3,8 @@ import ButtonIcon from '../../components/ButtonIcon.vue';
 import IconBell from '../../components/icons/IconBell.vue';
 import IconThumbUp from '../../components/icons/IconThumbUp.vue';
 import AvatarIcon from '../../components/AvatarIcon.vue';
+import { useUserStore } from '@/stores/user';
+const user = useUserStore();
 </script>
 
 <template>
@@ -22,7 +24,7 @@ import AvatarIcon from '../../components/AvatarIcon.vue';
       <div
         class="ml-4 font-sans font-bold group-hover:text-primary dark:text-gray-200 dark:group-hover:text-white"
       >
-        邊緣小杰
+        {{ user.name }}
       </div>
     </router-link>
     <router-link to="/" class="group mb-4 flex items-center">

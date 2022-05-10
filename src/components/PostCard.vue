@@ -12,9 +12,9 @@ defineProps<{
   createdAt?: string;
   content?: string;
   imgUrl?: Array<string>;
-  likes?: Array<number>;
+  likes?: Array<string>;
   messages?: {
-    id: number;
+    _id: string;
     name: string;
     avatarUrl: string;
     createdAt: string;

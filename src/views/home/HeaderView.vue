@@ -5,7 +5,6 @@ import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 const router = useRouter();
 const user = useUserStore();
-const userName = user.userData.name;
 
 function signOut() {
   localStorage.removeItem('metaWall');
@@ -35,9 +34,9 @@ function signOut() {
           <AvatarIcon :size="30" class="mr-2" />
           <label
             for="sub-menu"
-            class="border-b-2 border-black font-azeret font-bold dark:border-gray-300"
+            class="cursor-pointer border-b-2 border-black font-azeret font-bold dark:border-gray-300"
           >
-            {{ userName }}
+            {{ user.name }}
           </label>
           <input type="checkbox" class="peer hidden" id="sub-menu" />
           <div
@@ -49,7 +48,7 @@ function signOut() {
               >我的貼文牆</router-link
             >
             <router-link
-              to="/profile/edit"
+              to="/home/profile/edit"
               class="dark:dark-card border-t-2 border-b-2 border-black bg-white py-2 hover:bg-bg-light dark:hover:bg-gray-800"
               >修改個人資料</router-link
             >

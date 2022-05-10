@@ -1,5 +1,13 @@
 <script setup lang="ts">
-import DarkSwitch from '../components/DarkSwitch.vue';
+import DarkSwitch from '@/components/DarkSwitch.vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/user';
+const router = useRouter();
+const user = useUserStore();
+
+if (user.name) {
+  router.replace({ name: 'home' });
+}
 </script>
 
 <template>

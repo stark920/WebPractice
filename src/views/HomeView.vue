@@ -6,11 +6,8 @@ import { onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
-let token: string | null;
-
 onBeforeMount(() => {
-  token = localStorage.getItem('metaWall');
-  if (token) return;
+  if (localStorage.getItem('metaWall')) return;
 
   router.replace({ name: 'signIn' });
 });

@@ -8,32 +8,41 @@ import SwiperImgs from '../components/SwiperImgs.vue';
 
 interface image {
   url: string;
-  deleteHash: string;
 }
-
+interface message {
+  _id: string;
+  name: string;
+  avatarUrl: string;
+  createdAt: string;
+  content: string;
+}
+interface user {
+  _id: string;
+  name: string;
+  avatar: string | undefined;
+}
 interface post {
   _id: string;
-  userID: string;
+  user: user;
   content: string;
   images: Array<image | null>;
   createdAt: string;
   likes: Array<string | null>;
+  messages?: Array<message>;
 }
 
 let posts = ref<post[]>([]);
 
 onMounted(() => {
-  const token = {
+  axios({
+    method: 'get',
+    url: 'https://enigmatic-reef-71098.herokuapp.com/posts',
     headers: {
       Authorization: `Bearer ${localStorage.getItem('metaWall')}`,
     },
-  };
-
-  axios
-    .get('https://enigmatic-reef-71098.herokuapp.com/posts', token)
-    .then((res) => {
-      posts.value = res.data.data;
-    });
+  }).then((res) => {
+    posts.value = res.data.data;
+  });
 });
 
 function getImagesUrl(images: Array<image | null>) {
@@ -88,38 +97,23 @@ const lightBox = reactive({
     </div>
   </div>
 
-  <div v-if="posts.length === 0">
+  <template v-if="posts.length === 0">
     <EmptyCard></EmptyCard>
-  </div>
+  </template>
 
-  <div v-else>
-    <div>
+  <template v-else>
+    <div class="mb-[100px]">
       <PostCard
         v-for="post of posts"
         :key="post._id"
         @show-light-box="lightBox.toggleShow(true, getImagesUrl(post.images))"
-        name="abccc"
+        :name="post.user.name"
         :createdAt="post.createdAt"
         :content="post.content"
-        avatar-url="124124"
+        :avatar-url="post.user.avatar"
         :imgUrl="getImagesUrl(post.images)"
-        :messages="[
-          // {
-          //   id: 24247,
-          //   name: '3q4747',
-          //   avatarUrl: 'erjtertj',
-          //   createdAt: 'weurwturwtu',
-          //   content: 'rswtjrjstsrtj',
-          // },
-          // {
-          //   id: 24247,
-          //   name: '3q4747',
-          //   avatarUrl: 'erjtertj',
-          //   createdAt: 'weurwturwtu',
-          //   content: 'rswtjrjstsrtj',
-          // },
-        ]"
+        :messages="post.messages"
       />
     </div>
-  </div>
+  </template>
 </template>

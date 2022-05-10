@@ -1,32 +1,10 @@
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue';
 import axios from 'axios';
-import { useUserStore } from '@/stores/user';
-import { storeToRefs } from 'pinia';
+import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
-
+import { useUserStore } from '@/stores/user';
 const router = useRouter();
 const user = useUserStore();
-const { userData } = storeToRefs(user);
-
-onMounted(() => {
-  const hasToken = localStorage.getItem('metaWall');
-  if (!hasToken) return;
-
-  axios
-    .get('https://enigmatic-reef-71098.herokuapp.com/users/profile', {
-      headers: {
-        Authorization: `Bearer ${hasToken}`,
-      },
-    })
-    .then((res) => {
-      userData.value.name = res.data.data.name;
-      router.push({ name: 'home' });
-    })
-    .catch(() => {
-      // token expired
-    });
-});
 
 const signIn = reactive({
   isSending: false,
@@ -35,7 +13,7 @@ const signIn = reactive({
   loginResult: '',
   checkEmail: () => {
     if (signIn.email === '') return;
-    if (!signIn.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+    if (!signIn.email.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)) {
       return '信箱格式不正確';
     }
     return;
@@ -75,9 +53,11 @@ function postSignIn() {
     })
     .then((res) => {
       localStorage.setItem('metaWall', res.data.data.token);
-      userData.value.name = res.data.data.user;
+      user.id = res.data.data._id;
+      user.name = res.data.data.name;
+      user.avatar = res.data.data.avatar;
       signIn.reset();
-      router.push({ name: 'home' });
+      router.replace({ name: 'home' });
     })
     .catch((error) => {
       signIn.reset();

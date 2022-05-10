@@ -16,10 +16,6 @@ function getImageUrl(url: string) {
 
 <template>
   <div class="rounded-full" :style="`width: ${size}px; height: ${size}px`">
-    <img
-      :src="getImageUrl(avatarUrl)"
-      class="w-full object-contain"
-      alt="user's avatar"
-    />
+    <img :src="getImageUrl(avatarUrl)" class="w-full object-contain" />
   </div>
 </template>

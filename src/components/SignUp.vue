@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
 import axios from 'axios';
+import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 const router = useRouter();
@@ -24,7 +24,7 @@ const signUp = reactive({
   },
   checkEmail: () => {
     if (signUp.email === '') return;
-    if (!signUp.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
+    if (!signUp.email.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)) {
       return '信箱格式不正確';
     }
     return;
@@ -63,6 +63,7 @@ function postSignUp() {
   if (!signUp.checkContent()) return;
 
   signUp.isSending = true;
+
   axios
     .post('https://enigmatic-reef-71098.herokuapp.com/users/sign_up', {
       name: signUp.name.trim(),
@@ -71,7 +72,9 @@ function postSignUp() {
     })
     .then((res) => {
       localStorage.setItem('metaWall', res.data.data.token);
-      user.userData.name = res.data.data.user;
+      user.id = res.data.data._id;
+      user.name = res.data.data.name;
+      user.avatar = res.data.data.avatar;
       signUp.reset();
       window.alert('註冊成功');
       router.push({ name: 'home' });
