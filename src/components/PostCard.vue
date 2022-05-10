@@ -99,7 +99,7 @@ function toLocalDate(date: string | undefined) {
     <div
       v-for="message of messages"
       class="mt-4 rounded-lg bg-bg-light p-4 dark:border-gray-500 dark:bg-gray-800"
-      :key="message.id"
+      :key="message._id"
     >
       <UserInfo
         :size="40"
