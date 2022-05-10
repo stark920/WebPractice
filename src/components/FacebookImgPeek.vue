@@ -15,28 +15,19 @@ defineProps<{ imgUrl?: Array<string> }>();
       }"
     >
       <img
-        class="img-mask max-h-[50vh] w-full cursor-pointer object-cover"
-        :class="{ 'img-mask-last': index === 2 && imgUrl?.length > 3 }"
+        class="max-h-[50vh] w-full cursor-pointer object-cover hover:brightness-110"
+        :class="{
+          'brightness-50 hover:brightness-75':
+            index === 2 && imgUrl?.length > 3,
+        }"
         :src="img"
       />
       <p
         v-if="index === 2 && imgUrl?.length > 3"
-        class="absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] font-sans text-4xl text-gray-100"
+        class="absolute top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%] select-none font-sans text-4xl text-gray-100"
       >
         + {{ imgUrl?.length - 3 }}
       </p>
     </div>
   </div>
 </template>
-
-<style scoped>
-.img-mask:hover {
-  filter: brightness(120%);
-}
-.img-mask-last {
-  filter: brightness(60%);
-}
-.img-mask-last:hover {
-  filter: brightness(70%);
-}
-</style>

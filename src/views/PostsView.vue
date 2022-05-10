@@ -3,35 +3,66 @@ import axios from 'axios';
 import IconSearch from '../components/icons/IconSearch.vue';
 import PostCard from '../components/PostCard.vue';
 import EmptyCard from '../components/EmptyCard.vue';
-import { onMounted, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import SwiperImgs from '../components/SwiperImgs.vue';
 
-let isLightBox = ref(false);
-let posts = ref([]);
-let lightBoxImages = ref([]);
-const toggleLightBox = (show: boolean, data?: Array<string>) => {
-  if (show) {
-    isLightBox.value = true;
-    lightBoxImages.value = data;
-  } else {
-    isLightBox.value = false;
-    lightBoxImages.value = [];
-  }
-};
+interface image {
+  url: string;
+  deleteHash: string;
+}
+
+interface post {
+  _id: string;
+  userID: string;
+  content: string;
+  images: Array<image | null>;
+  createdAt: string;
+  likes: Array<string | null>;
+}
+
+let posts = ref<post[]>([]);
 
 onMounted(() => {
-  // axios.get('https://teamwork02.herokuapp.com/posts').then((res) => {
-  //   posts.value = res.data.data.data;
-  // });
+  const token = {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('metaWall')}`,
+    },
+  };
+
+  axios.get('http://127.0.0.1:3005/posts', token).then((res) => {
+    posts.value = res.data.data;
+  });
+});
+
+function getImagesUrl(images: Array<image | null>) {
+  if (!images) return;
+
+  const urls: string[] = [];
+
+  images.forEach((image: image | null) => {
+    if (image?.url) urls.push(image.url);
+  });
+
+  return urls;
+}
+
+const lightBox = reactive({
+  isShow: false,
+  images: [''],
+  toggleShow(show: boolean, data: Array<string>) {
+    lightBox.isShow = show;
+    lightBox.images = data;
+  },
 });
 </script>
 
 <template>
   <SwiperImgs
-    @close-light-box="toggleLightBox(false)"
-    v-if="isLightBox"
-    :images="lightBoxImages"
+    @close-light-box="lightBox.toggleShow(false, [''])"
+    v-if="lightBox.isShow"
+    :images="lightBox.images"
   ></SwiperImgs>
+
   <div class="mb-4 flex flex-wrap justify-between gap-x-4 gap-y-2">
     <select
       class="dark:dark-card custom-border w-full px-3 py-1.5 font-azeret focus:border-primary lg:w-3/12"
@@ -39,7 +70,9 @@ onMounted(() => {
       <option value="new" selected>最新貼文</option>
       <option value="hot">熱門貼文</option>
     </select>
-    <div class="dark:dark-card custom-border flex flex-1 items-center">
+    <div
+      class="dark:dark-card custom-border flex flex-1 items-center bg-primary"
+    >
       <input
         type="search"
         class="flex-1 border-0 px-3 py-1.5 focus:border-primary dark:bg-gray-700"
@@ -53,47 +86,39 @@ onMounted(() => {
     </div>
   </div>
 
-  <EmptyCard></EmptyCard>
-  <PostCard
-    @show-light-box="
-      toggleLightBox(true, [
-        'https://scontent.fkhh1-2.fna.fbcdn.net/v/t39.30808-6/241024648_4709451582407909_7771307663622385679_n.jpg?stp=dst-jpg_p180x540&_nc_cat=109&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=L6nk3BNtnLUAX-au_6S&_nc_ht=scontent.fkhh1-2.fna&oh=00_AT9DvTMExuWW4AldgpGfyGbCXGegIWYTxjIxNLIH0LHPgQ&oe=6276A7C2',
-        'https://scontent.fkhh1-2.fna.fbcdn.net/v/t39.30808-6/241024648_4709451582407909_7771307663622385679_n.jpg?stp=dst-jpg_p180x540&_nc_cat=109&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=L6nk3BNtnLUAX-au_6S&_nc_ht=scontent.fkhh1-2.fna&oh=00_AT9DvTMExuWW4AldgpGfyGbCXGegIWYTxjIxNLIH0LHPgQ&oe=6276A7C2',
-        'https://scontent.fkhh1-2.fna.fbcdn.net/v/t39.30808-6/241024648_4709451582407909_7771307663622385679_n.jpg?stp=dst-jpg_p180x540&_nc_cat=109&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=L6nk3BNtnLUAX-au_6S&_nc_ht=scontent.fkhh1-2.fna&oh=00_AT9DvTMExuWW4AldgpGfyGbCXGegIWYTxjIxNLIH0LHPgQ&oe=6276A7C2',
-      ])
-    "
-    name="abccc"
-    createdAt="35734784"
-    content="1dhoij;oe"
-    avatar-url="124124"
-    :imgUrl="[
-      'https://scontent.fkhh1-2.fna.fbcdn.net/v/t39.30808-6/241024648_4709451582407909_7771307663622385679_n.jpg?stp=dst-jpg_p180x540&_nc_cat=109&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=L6nk3BNtnLUAX-au_6S&_nc_ht=scontent.fkhh1-2.fna&oh=00_AT9DvTMExuWW4AldgpGfyGbCXGegIWYTxjIxNLIH0LHPgQ&oe=6276A7C2',
-      'https://scontent.fkhh1-2.fna.fbcdn.net/v/t39.30808-6/241024648_4709451582407909_7771307663622385679_n.jpg?stp=dst-jpg_p180x540&_nc_cat=109&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=L6nk3BNtnLUAX-au_6S&_nc_ht=scontent.fkhh1-2.fna&oh=00_AT9DvTMExuWW4AldgpGfyGbCXGegIWYTxjIxNLIH0LHPgQ&oe=6276A7C2',
-      'https://scontent.fkhh1-2.fna.fbcdn.net/v/t39.30808-6/241024648_4709451582407909_7771307663622385679_n.jpg?stp=dst-jpg_p180x540&_nc_cat=109&ccb=1-5&_nc_sid=8bfeb9&_nc_ohc=L6nk3BNtnLUAX-au_6S&_nc_ht=scontent.fkhh1-2.fna&oh=00_AT9DvTMExuWW4AldgpGfyGbCXGegIWYTxjIxNLIH0LHPgQ&oe=6276A7C2',
-    ]"
-    :likes="[124124, 216612]"
-    :messages="[
-      {
-        id: 24247,
-        name: '3q4747',
-        avatarUrl: 'erjtertj',
-        createdAt: 'weurwturwtu',
-        content: 'rswtjrjstsrtj',
-      },
-      {
-        id: 24247,
-        name: '3q4747',
-        avatarUrl: 'erjtertj',
-        createdAt: 'weurwturwtu',
-        content: 'rswtjrjstsrtj',
-      },
-    ]"
-  />
-  <PostCard />
-  <PostCard />
-  <PostCard />
-  <PostCard />
-  <PostCard />
-  <PostCard />
-  <PostCard />
+  <div v-if="posts.length === 0">
+    <EmptyCard></EmptyCard>
+  </div>
+
+  <div v-else>
+    <div>
+      <PostCard
+        v-for="post of posts"
+        :key="post._id"
+        @show-light-box="lightBox.toggleShow(true, getImagesUrl(post.images))"
+        name="abccc"
+        :createdAt="post.createdAt"
+        :content="post.content"
+        avatar-url="124124"
+        :imgUrl="getImagesUrl(post.images)"
+        :likes="post.likes"
+        :messages="[
+          // {
+          //   id: 24247,
+          //   name: '3q4747',
+          //   avatarUrl: 'erjtertj',
+          //   createdAt: 'weurwturwtu',
+          //   content: 'rswtjrjstsrtj',
+          // },
+          // {
+          //   id: 24247,
+          //   name: '3q4747',
+          //   avatarUrl: 'erjtertj',
+          //   createdAt: 'weurwturwtu',
+          //   content: 'rswtjrjstsrtj',
+          // },
+        ]"
+      />
+    </div>
+  </div>
 </template>

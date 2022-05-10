@@ -10,7 +10,7 @@ import IconPlus from '../../components/icons/IconPlus.vue';
   <div
     class="custom-border fixed bottom-1 left-2 right-2 flex justify-evenly rounded-full bg-bg-light py-2 dark:border-gray-500 dark:bg-gray-800"
   >
-    <router-link to="/">
+    <router-link to="/home">
       <ButtonIcon
         class="bg-white hover:bg-primary hover:text-white dark:bg-gray-600 dark:hover:bg-gray-500"
       >
@@ -34,7 +34,7 @@ import IconPlus from '../../components/icons/IconPlus.vue';
       </ButtonIcon>
     </router-link>
 
-    <router-link to="/">
+    <router-link to="/home/post">
       <ButtonIcon
         class="bg-primary text-white hover:bg-warn hover:text-white dark:bg-gray-300 dark:text-gray-700 dark:hover:bg-gray-100"
       >

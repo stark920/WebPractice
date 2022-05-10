@@ -30,6 +30,12 @@ function sendMessage() {
     sendingMessage.value = false;
   }, 1000);
 }
+
+function toLocalDate(date: string | undefined) {
+  if (!date) return;
+  const d = new Date(date);
+  return d.toLocaleString();
+}
 </script>
 
 <template>
@@ -40,9 +46,11 @@ function sendMessage() {
       :size="45"
       :avatar-url="avatarUrl"
       :title="name"
-      :subtitle="createdAt"
+      :subtitle="toLocalDate(createdAt)"
     ></UserInfo>
-    <div class="my-4">{{ content }}</div>
+
+    <pre class="my-4">{{ content }}</pre>
+
     <FacebookImgPeek
       @click="$emit('showLightBox')"
       :img-url="imgUrl"
@@ -65,6 +73,7 @@ function sendMessage() {
         >{{ likes?.length || '成為第一個按讚的朋友' }}</span
       >
     </div>
+
     <div class="mt-4 flex justify-between gap-x-2">
       <AvatarIcon :size="40" class="self-center"></AvatarIcon>
       <div class="dark:dark-card custom-border flex flex-1 items-center">
@@ -86,6 +95,7 @@ function sendMessage() {
         </div>
       </div>
     </div>
+
     <div
       v-for="message of messages"
       class="mt-4 rounded-lg bg-bg-light p-4 dark:border-gray-500 dark:bg-gray-800"

@@ -14,10 +14,11 @@ const passwordObj = reactive({
 });
 const pwdIsValid = ref(false);
 
-function toggleDisplayCard() {
-  currentCard.value === 'name'
-    ? (currentCard.value = 'password')
-    : (currentCard.value = 'name');
+function toggleDisplayCard(card: string) {
+  if (currentCard.value === card) return;
+  card === 'name'
+    ? (currentCard.value = 'name')
+    : (currentCard.value = 'password');
   validateMessage.value = [''];
   passwordObj.input1 = '';
   passwordObj.input2 = '';
@@ -53,7 +54,7 @@ function validatePassword() {
         name="profile"
         id="name"
         checked
-        @click="toggleDisplayCard"
+        @click="toggleDisplayCard('name')"
       />
       <label
         for="name"
@@ -68,7 +69,7 @@ function validatePassword() {
         value="password"
         name="profile"
         id="password"
-        @click="toggleDisplayCard"
+        @click="toggleDisplayCard('password')"
       />
       <label
         for="password"

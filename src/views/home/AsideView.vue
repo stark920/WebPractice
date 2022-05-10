@@ -9,7 +9,7 @@ import AvatarIcon from '../../components/AvatarIcon.vue';
   <div
     class="custom-border dark:dark-card sticky top-[calc(60px+2rem)] w-full bg-white px-6 py-8"
   >
-    <router-link to="/post">
+    <router-link to="/home/post">
       <button
         type="button"
         class="primary-color custom-border mb-6 w-full rounded-lg py-3 font-azeret font-bold"

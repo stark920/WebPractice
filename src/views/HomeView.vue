@@ -2,6 +2,18 @@
 import HeaderViewVue from './home/HeaderView.vue';
 import AsideView from './home/AsideView.vue';
 import ToolBarView from './home/ToolBarView.vue';
+import { onBeforeMount } from 'vue';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+let token: string | null;
+
+onBeforeMount(() => {
+  token = localStorage.getItem('metaWall');
+  if (token) return;
+
+  router.replace({ name: 'signIn' });
+});
 </script>
 
 <template>

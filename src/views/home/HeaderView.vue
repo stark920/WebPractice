@@ -1,38 +1,16 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import IconSunVue from '@/components/icons/IconSun.vue';
-import IconMoonVue from '@/components/icons/IconMoon.vue';
 import AvatarIcon from '../../components/AvatarIcon.vue';
+import DarkSwitch from '../../components/DarkSwitch.vue';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/user';
+const router = useRouter();
+const user = useUserStore();
+const userName = user.userData.name;
 
-let isDark = ref('light');
-
-onMounted(() => {
-  if (
-    localStorage.theme === 'dark' ||
-    (!('theme' in localStorage) &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches)
-  ) {
-    isDark.value = 'dark';
-    document.documentElement.classList.add('dark');
-  } else {
-    isDark.value = 'light';
-    document.documentElement.classList.remove('dark');
-  }
-});
-
-/**
- *
- */
-function toggleDarkMode() {
-  if (isDark.value === 'light') {
-    isDark.value = 'dark';
-    localStorage.theme = 'dark';
-    document.documentElement.classList.add('dark');
-  } else {
-    isDark.value = 'light';
-    localStorage.theme = 'light';
-    document.documentElement.classList.remove('dark');
-  }
+function signOut() {
+  localStorage.removeItem('metaWall');
+  user.clear();
+  router.push({ name: 'signIn' });
 }
 </script>
 
@@ -44,35 +22,46 @@ function toggleDarkMode() {
       class="mx-auto flex h-[60px] w-full max-w-screen-lg items-center justify-between px-2 dark:text-white lg:px-4"
     >
       <router-link
-        to="/"
+        to="/home"
         class="font-paytone text-[1.625rem] font-bold tracking-wide"
       >
         MetaWall
       </router-link>
       <div class="flex select-none items-center">
         <div class="mr-4">
-          <IconSunVue
-            v-show="isDark === 'dark'"
-            class="cursor-pointer text-gray-400 hover:text-white"
-            @click="toggleDarkMode"
-          >
-            <title>關閉夜間模式</title>
-          </IconSunVue>
-          <IconMoonVue
-            v-show="isDark === 'light'"
-            class="cursor-pointer self-center text-gray-400 hover:text-black"
-            @click="toggleDarkMode"
-          >
-            <title>夜間模式</title>
-          </IconMoonVue>
+          <DarkSwitch></DarkSwitch>
         </div>
-        <AvatarIcon :size="30" class="mr-2" />
-        <button
-          type="button"
-          class="border-b-2 border-black font-azeret font-bold dark:border-gray-300"
-        >
-          Member
-        </button>
+        <div class="relative flex items-center">
+          <AvatarIcon :size="30" class="mr-2" />
+          <label
+            for="sub-menu"
+            class="border-b-2 border-black font-azeret font-bold dark:border-gray-300"
+          >
+            {{ userName }}
+          </label>
+          <input type="checkbox" class="peer hidden" id="sub-menu" />
+          <div
+            class="dark:dark-card custom-border absolute right-0 top-[calc(100%+0.5rem)] hidden w-[180px] text-center peer-checked:grid"
+          >
+            <router-link
+              to="/profile"
+              class="dark:dark-card bg-white py-2 hover:bg-bg-light dark:hover:bg-gray-800"
+              >我的貼文牆</router-link
+            >
+            <router-link
+              to="/profile/edit"
+              class="dark:dark-card border-t-2 border-b-2 border-black bg-white py-2 hover:bg-bg-light dark:hover:bg-gray-800"
+              >修改個人資料</router-link
+            >
+            <button
+              type="button"
+              class="dark:dark-card bg-white py-2 hover:bg-bg-light dark:hover:bg-gray-800"
+              @click="signOut()"
+            >
+              登出
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </header>
