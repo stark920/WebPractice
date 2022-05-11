@@ -1,18 +1,19 @@
-<template>
-  <router-view></router-view>
-</template>
-
 <script setup lang="ts">
+import IconLoad from './components/icons/IconLoad.vue';
 import axios from 'axios';
-import { onBeforeMount } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 const router = useRouter();
 const user = useUserStore();
+const dataLoaded = ref(false);
 
-onBeforeMount(() => {
+onMounted(() => {
   const token = localStorage.getItem('metaWall');
-  if (!token) return;
+  if (!token) {
+    dataLoaded.value = true;
+    return;
+  }
 
   axios({
     method: 'post',
@@ -25,6 +26,7 @@ onBeforeMount(() => {
       user.id = res.data.data._id;
       user.name = res.data.data.name;
       user.avatar = res.data.data.avatar;
+      dataLoaded.value = true;
       router.push({ name: 'home' });
     })
     .catch(() => {
@@ -32,3 +34,15 @@ onBeforeMount(() => {
     });
 });
 </script>
+
+<template>
+  <router-view v-if="dataLoaded"></router-view>
+  <div
+    v-else
+    class="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-bg-light dark:bg-bg-dark"
+  >
+    <IconLoad
+      class="h-12 w-12 animate-spin text-black dark:text-gray-300"
+    ></IconLoad>
+  </div>
+</template>

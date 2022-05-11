@@ -14,6 +14,7 @@ if (user.name) {
   <div class="fixed top-2 right-2">
     <DarkSwitch></DarkSwitch>
   </div>
+
   <main class="flex h-screen w-screen items-center justify-center">
     <div
       class="custom-border dark:dark-card flex w-11/12 max-w-[900px] items-center bg-white px-6 py-8 md:px-12 md:py-16"

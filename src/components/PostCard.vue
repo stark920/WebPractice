@@ -40,7 +40,7 @@ function toLocalDate(date: string | undefined) {
 
 <template>
   <div
-    class="custom-border dark:dark-card shadow-black-3px mb-4 w-full rounded-lg bg-white p-6"
+    class="custom-border dark:dark-card shadow-black-3px mb-4 w-full rounded-lg bg-white p-3 md:p-6"
   >
     <UserInfo
       :size="45"
@@ -84,7 +84,7 @@ function toLocalDate(date: string | undefined) {
         />
         <div
           @click="sendMessage"
-          class="flex h-full w-2/12 cursor-pointer items-center justify-center border-l-2 border-black bg-primary text-white dark:border-gray-600"
+          class="flex h-full cursor-pointer items-center justify-center border-l-2 border-black bg-primary px-4 text-white dark:border-gray-600"
           :class="{ 'bg-warn text-black': sendingMessage }"
         >
           留言

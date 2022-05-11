@@ -16,12 +16,12 @@ onBeforeMount(() => {
 <template>
   <HeaderViewVue />
   <main
-    class="mx-auto flex w-full max-w-screen-lg justify-between px-4 pt-[calc(60px+2rem)] md:gap-x-4"
+    class="mx-auto flex w-full max-w-screen-lg justify-between gap-x-0 px-4 pt-[calc(60px+2rem)] md:gap-x-4"
   >
     <article class="flex-1">
       <router-view />
     </article>
-    <aside class="hidden w-4/12 md:block">
+    <aside class="hidden w-0 md:block md:w-4/12">
       <AsideView />
     </aside>
   </main>
