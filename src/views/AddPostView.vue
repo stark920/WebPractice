@@ -4,8 +4,11 @@ import IconTrash from '../components/icons/IconTrash.vue';
 import IconLoad from '../components/icons/IconLoad.vue';
 import SwiperImgs from '../components/SwiperImgs.vue';
 import imageCompression from 'browser-image-compression';
+import { useLightBoxStore } from '@/stores/lightBox';
 import axios from 'axios';
 import { reactive, ref } from 'vue';
+
+const lightBox = useLightBoxStore();
 
 interface posts {
   content: string;
@@ -13,6 +16,8 @@ interface posts {
   blobUrls: string[];
   isUploading: boolean;
   isSending: boolean;
+  reset: () => undefined;
+  check: () => boolean;
 }
 
 const post: posts = reactive({
@@ -21,24 +26,23 @@ const post: posts = reactive({
   blobUrls: [],
   isUploading: false,
   isSending: false,
+  reset: () => {
+    post.content = '';
+    post.images.length = 0;
+    post.blobUrls.length = 0;
+    return undefined;
+  },
+  check: () => {
+    return post.content.length > 0 && !post.isUploading ? true : false;
+  },
 });
-
-function resetPost() {
-  post.content = '';
-  post.images.length = 0;
-  post.blobUrls.length = 0;
-}
-
-function checkPostContent() {
-  return post.content.length > 0 && !post.isUploading ? true : false;
-}
 
 const uploadImages = ref<HTMLInputElement | null>();
 const allowImageTypes = 'image/jpg, image/jpeg, image/png';
 const alertMessage = ref('');
 
 async function sendPost() {
-  if (!checkPostContent()) return;
+  if (!post.check()) return;
 
   post.isSending = true;
 
@@ -56,8 +60,7 @@ async function sendPost() {
   axios(option)
     .then(() => {
       post.isSending = false;
-      resetPost();
-      uploadImages.value = null;
+      post.reset();
       window.alert('貼文上傳成功！');
     })
     .catch(() => {
@@ -105,6 +108,7 @@ async function handleImageUpload() {
       alertMessage.value = '圖片異常，無法正確壓縮';
     }
   }
+  uploadImages.value = null;
   post.isUploading = false;
 }
 
@@ -118,22 +122,14 @@ function deleteImage(index: number) {
   post.images.splice(index, 1);
 }
 
-const lightBox = reactive({
-  isShow: false,
-  images: [''],
-  toggleShow(show: boolean, data: Array<string>) {
-    lightBox.isShow = show;
-    lightBox.images = data;
-  },
-});
+function showLightBox(data: Array<string>) {
+  lightBox.show = true;
+  lightBox.images = data;
+}
 </script>
 
 <template>
-  <SwiperImgs
-    @close-light-box="lightBox.toggleShow(false, [''])"
-    v-if="lightBox.isShow"
-    :images="lightBox.images"
-  ></SwiperImgs>
+  <SwiperImgs></SwiperImgs>
 
   <TitleCard title="張貼動態" />
 
@@ -185,14 +181,14 @@ const lightBox = reactive({
           v-for="(imgUrl, index) of post.blobUrls"
           :key="index"
           class="relative bg-white dark:bg-gray-400"
+          @click.stop="showLightBox(post.blobUrls)"
         >
           <img
-            @click.self="lightBox.toggleShow(true, [imgUrl])"
             class="aspect-video w-full cursor-pointer object-contain hover:brightness-110"
             :src="imgUrl"
           />
           <div
-            @click="deleteImage(index)"
+            @click.stop="deleteImage(index)"
             class="absolute top-1 right-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-[rgba(0,0,0,.2)] text-white hover:bg-[rgba(0,0,0,.4)]"
           >
             <IconTrash class="h-4 w-4">
@@ -209,11 +205,11 @@ const lightBox = reactive({
       <button
         type="button"
         :class="{
-          'primary-color border-black': checkPostContent(),
-          'cursor-not-allowed border-gray-500 bg-gray-400': !checkPostContent(),
+          'primary-color border-black': post.check(),
+          'cursor-not-allowed border-gray-500 bg-gray-400': !post.check(),
           'cursor-wait': post.isSending,
         }"
-        :disabled="!checkPostContent()"
+        :disabled="!post.check()"
         class="mx-auto flex w-full max-w-[300px] items-center justify-center rounded-lg border-2 py-3 text-white"
         @click="sendPost"
       >

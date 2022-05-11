@@ -3,8 +3,11 @@ import axios from 'axios';
 import IconSearch from '../components/icons/IconSearch.vue';
 import PostCard from '../components/PostCard.vue';
 import EmptyCard from '../components/EmptyCard.vue';
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import PulsePostCard from '../components/PulsePostCard.vue';
 import SwiperImgs from '../components/SwiperImgs.vue';
+
+const postsLoading = ref(true);
 
 interface image {
   url: string;
@@ -42,6 +45,7 @@ onMounted(() => {
     },
   }).then((res) => {
     posts.value = res.data.data;
+    postsLoading.value = false;
   });
 });
 
@@ -56,23 +60,10 @@ function getImagesUrl(images: Array<image | null>) {
 
   return urls;
 }
-
-const lightBox = reactive({
-  isShow: false,
-  images: [''],
-  toggleShow(show: boolean, data: Array<string>) {
-    lightBox.isShow = show;
-    lightBox.images = data;
-  },
-});
 </script>
 
 <template>
-  <SwiperImgs
-    @close-light-box="lightBox.toggleShow(false, [''])"
-    v-if="lightBox.isShow"
-    :images="lightBox.images"
-  ></SwiperImgs>
+  <SwiperImgs></SwiperImgs>
 
   <div class="mb-4 flex flex-wrap justify-between gap-x-4 gap-y-2">
     <select
@@ -97,16 +88,16 @@ const lightBox = reactive({
     </div>
   </div>
 
-  <template v-if="posts.length === 0">
-    <EmptyCard></EmptyCard>
-  </template>
+  <template v-if="!postsLoading">
+    <EmptyCard
+      v-if="posts.length === 0"
+      content="目前尚無動態，新增一則貼文吧！"
+    ></EmptyCard>
 
-  <template v-else>
-    <div class="mb-[100px]">
+    <template v-else>
       <PostCard
         v-for="post of posts"
         :key="post._id"
-        @show-light-box="lightBox.toggleShow(true, getImagesUrl(post.images))"
         :name="post.user.name"
         :createdAt="post.createdAt"
         :content="post.content"
@@ -114,6 +105,12 @@ const lightBox = reactive({
         :imgUrl="getImagesUrl(post.images)"
         :messages="post.messages"
       />
-    </div>
+      <EmptyCard content="沒有新的貼文了，新增一則貼文吧！"></EmptyCard>
+    </template>
   </template>
+  <div v-show="postsLoading">
+    <PulsePostCard></PulsePostCard>
+    <PulsePostCard></PulsePostCard>
+  </div>
+  <div class="block h-[100px] w-full md:h-0"></div>
 </template>

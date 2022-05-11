@@ -1,3 +1,9 @@
+<script setup lang="ts">
+defineProps<{
+  content: string;
+}>();
+</script>
+
 <template>
   <div
     class="custom-border shadow-black-3px dark:dark-card mb-4 rounded-lg bg-white"
@@ -14,7 +20,7 @@
       ></div>
     </div>
     <div class="p-12 text-center text-gray-400 dark:text-gray-300">
-      目前尚無動態，新增一則貼文吧！
+      {{ content }}
     </div>
   </div>
 </template>

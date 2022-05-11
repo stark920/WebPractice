@@ -49,7 +49,7 @@ function toLocalDate(date: string | undefined) {
       :subtitle="toLocalDate(createdAt)"
     ></UserInfo>
 
-    <pre class="my-4">{{ content }}</pre>
+    <pre class="my-4 whitespace-pre-wrap">{{ content }}</pre>
 
     <FacebookImgPeek
       @click="$emit('showLightBox')"
@@ -107,7 +107,9 @@ function toLocalDate(date: string | undefined) {
         :title="message.name"
         :subtitle="message.createdAt"
       ></UserInfo>
-      <div class="ml-[calc(40px+1rem)]">{{ message.content }}</div>
+      <div class="ml-[calc(40px+1rem)] whitespace-pre-wrap">
+        {{ message.content }}
+      </div>
     </div>
   </div>
 </template>
