@@ -18,7 +18,7 @@ function signOut() {
     class="fixed top-0 left-0 right-0 z-50 border-b-2 border-black bg-white dark:border-gray-500 dark:bg-gray-800"
   >
     <div
-      class="mx-auto flex h-[60px] w-full max-w-screen-lg items-center justify-between px-2 dark:text-white lg:px-4"
+      class="mx-auto flex h-[60px] w-full items-center justify-between px-4 dark:text-white sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg lg:px-4"
     >
       <router-link
         to="/home"

@@ -65,7 +65,7 @@ function getImagesUrl(images: Array<image | null>) {
 <template>
   <SwiperImgs></SwiperImgs>
 
-  <div class="mb-[100px] w-screen md:mb-0">
+  <div class="mb-[100px] w-full md:mb-0">
     <div
       class="mb-4 flex flex-wrap justify-between gap-x-0 gap-y-2 md:gap-x-4 md:gap-y-0"
     >

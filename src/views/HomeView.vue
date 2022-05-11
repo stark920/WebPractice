@@ -16,7 +16,7 @@ onBeforeMount(() => {
 <template>
   <HeaderViewVue />
   <main
-    class="mx-auto flex w-full max-w-screen-lg justify-between gap-x-0 px-4 pt-[calc(60px+2rem)] md:gap-x-4"
+    class="mx-auto flex w-full justify-between gap-x-0 px-4 pt-[calc(60px+2rem)] sm:max-w-screen-sm md:max-w-screen-md md:gap-x-4 lg:max-w-screen-lg"
   >
     <article class="flex-1">
       <router-view />
