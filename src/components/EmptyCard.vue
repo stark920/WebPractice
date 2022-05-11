@@ -6,7 +6,7 @@ defineProps<{
 
 <template>
   <div
-    class="custom-border shadow-black-3px dark:dark-card mb-4 rounded-lg bg-white"
+    class="custom-border shadow-black-3px dark:dark-card mb-4 w-full rounded-lg bg-white"
   >
     <div class="flex border-b-2 border-black p-4 dark:border-gray-600">
       <div

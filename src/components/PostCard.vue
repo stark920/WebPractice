@@ -40,7 +40,7 @@ function toLocalDate(date: string | undefined) {
 
 <template>
   <div
-    class="custom-border dark:dark-card shadow-black-3px mb-4 rounded-lg bg-white p-6"
+    class="custom-border dark:dark-card shadow-black-3px mb-4 w-full rounded-lg bg-white p-6"
   >
     <UserInfo
       :size="45"

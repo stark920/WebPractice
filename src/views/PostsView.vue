@@ -65,7 +65,7 @@ function getImagesUrl(images: Array<image | null>) {
 <template>
   <SwiperImgs></SwiperImgs>
 
-  <div class="mb-4 flex flex-wrap justify-between gap-x-4 gap-y-2">
+  <div class="mb-4 flex w-full flex-wrap justify-between gap-x-4 gap-y-2">
     <select
       class="dark:dark-card custom-border w-full px-3 py-1.5 font-azeret focus:border-primary lg:w-3/12"
     >
@@ -88,7 +88,7 @@ function getImagesUrl(images: Array<image | null>) {
     </div>
   </div>
 
-  <template v-if="!postsLoading">
+  <div class="w-full" v-if="!postsLoading">
     <EmptyCard
       v-if="posts.length === 0"
       content="目前尚無動態，新增一則貼文吧！"
@@ -107,8 +107,8 @@ function getImagesUrl(images: Array<image | null>) {
       />
       <EmptyCard content="沒有新的貼文了，新增一則貼文吧！"></EmptyCard>
     </template>
-  </template>
-  <div v-show="postsLoading">
+  </div>
+  <div class="w-full" v-show="postsLoading">
     <PulsePostCard></PulsePostCard>
     <PulsePostCard></PulsePostCard>
   </div>

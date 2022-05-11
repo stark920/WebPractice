@@ -8,7 +8,7 @@ import FacebookImgPeek from './FacebookImgPeek.vue';
 
 <template>
   <div
-    class="custom-border dark:dark-card shadow-black-3px mb-4 animate-pulse rounded-lg bg-white p-6"
+    class="custom-border dark:dark-card shadow-black-3px mb-4 w-full animate-pulse rounded-lg bg-white p-6"
   >
     <UserInfo></UserInfo>
 
