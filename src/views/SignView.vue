@@ -16,7 +16,7 @@ if (user.name) {
   </div>
   <main class="flex h-screen w-screen items-center justify-center">
     <div
-      class="custom-border dark:dark-card flex w-11/12 max-w-[900px] items-center bg-white px-12 py-16"
+      class="custom-border dark:dark-card flex w-11/12 max-w-[900px] items-center bg-white px-6 py-8 md:px-12 md:py-16"
     >
       <div class="hidden md:block">
         <img src="@/assets/login_page.svg" alt="login_banner" />
