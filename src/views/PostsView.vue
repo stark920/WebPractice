@@ -91,7 +91,12 @@ function getImagesUrl(images: Array<image | null>) {
       </div>
     </div>
 
-    <div class="w-full" v-if="!postsLoading">
+    <div v-show="postsLoading">
+      <PulsePostCard></PulsePostCard>
+      <PulsePostCard></PulsePostCard>
+    </div>
+
+    <div v-show="!postsLoading">
       <EmptyCard
         v-if="posts.length === 0"
         content="目前尚無動態，新增一則貼文吧！"
@@ -110,11 +115,6 @@ function getImagesUrl(images: Array<image | null>) {
         />
         <EmptyCard content="沒有其他貼文了！"></EmptyCard>
       </template>
-
-      <div class="w-full" v-show="postsLoading">
-        <PulsePostCard></PulsePostCard>
-        <PulsePostCard></PulsePostCard>
-      </div>
     </div>
   </div>
 </template>
