@@ -70,24 +70,29 @@ function postSignIn() {
 </script>
 
 <template>
-  <p class="text-center font-sans text-2xl font-bold">到元宇宙展開全新社交圈</p>
-  <div class="grid px-9 pt-9 font-azeret" @keyup.enter.stop="postSignIn()">
+  <p class="w-full text-center font-sans text-2xl font-bold">
+    到元宇宙展開全新社交圈
+  </p>
+  <div
+    class="grid w-full px-9 pt-9 font-azeret"
+    @keyup.enter.stop="postSignIn()"
+  >
     <input
-      class="custom-border focus:border-primary dark:text-black"
+      class="custom-border w-full focus:border-primary dark:text-black"
       type="email"
       placeholder="Email"
       v-model="signIn.email"
       @input="signIn.email = signIn.email.toLowerCase()"
     />
     <input
-      class="custom-border mt-4 focus:border-primary dark:text-black"
+      class="custom-border mt-4 w-full focus:border-primary dark:text-black"
       type="password"
       placeholder="Password"
       v-model="signIn.password"
     />
-    <p class="mt-4 text-center text-alert">{{ signIn.checkEmail() }}</p>
-    <p class="text-center text-alert">{{ signIn.checkPassword() }}</p>
-    <p class="text-center text-alert">{{ signIn.loginResult }}</p>
+    <p class="mt-4 w-full text-center text-alert">{{ signIn.checkEmail() }}</p>
+    <p class="w-full text-center text-alert">{{ signIn.checkPassword() }}</p>
+    <p class="w-full text-center text-alert">{{ signIn.loginResult }}</p>
     <button
       type="button"
       :class="{
@@ -96,7 +101,7 @@ function postSignIn() {
           !signIn.checkContent(),
         'cursor-wait': signIn.isSending,
       }"
-      class="custom-border mt-8 rounded-lg py-2 shadow-sm shadow-black"
+      class="custom-border mt-8 w-full rounded-lg py-2 shadow-sm shadow-black"
       :disabled="!signIn.checkContent() || signIn.isSending"
       @click="postSignIn()"
     >

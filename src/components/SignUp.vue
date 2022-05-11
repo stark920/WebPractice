@@ -87,17 +87,20 @@ function postSignUp() {
 </script>
 
 <template>
-  <p class="text-center font-sans text-2xl font-bold">註冊</p>
-  <div class="grid px-9 pt-9 font-azeret" @keyup.enter.stop="postSignUp()">
+  <p class="w-full text-center font-sans text-2xl font-bold">註冊</p>
+  <div
+    class="grid w-full px-9 pt-9 font-azeret"
+    @keyup.enter.stop="postSignUp()"
+  >
     <input
-      class="custom-border focus:border-primary dark:text-black"
+      class="custom-border w-full focus:border-primary dark:text-black"
       type="text"
       placeholder="暱稱"
       v-model="signUp.name"
     />
     <span class="text-alert">{{ signUp.checkName() }}</span>
     <input
-      class="custom-border mt-4 focus:border-primary dark:text-black"
+      class="custom-border mt-4 w-full focus:border-primary dark:text-black"
       type="email"
       placeholder="Email"
       v-model="signUp.email"
@@ -105,7 +108,7 @@ function postSignUp() {
     />
     <span class="text-alert">{{ signUp.checkEmail() }}</span>
     <input
-      class="custom-border mt-4 focus:border-primary dark:text-black"
+      class="custom-border mt-4 w-full focus:border-primary dark:text-black"
       type="password"
       placeholder="Password"
       v-model="signUp.password"
@@ -119,7 +122,7 @@ function postSignUp() {
           !signUp.checkContent(),
         'cursor-wait': signUp.isSending,
       }"
-      class="custom-border mt-8 rounded-lg py-2 shadow-sm shadow-black"
+      class="custom-border mt-8 w-full rounded-lg py-2 shadow-sm shadow-black"
       :disabled="!signUp.checkContent() || signUp.isSending"
       @click="postSignUp()"
     >
