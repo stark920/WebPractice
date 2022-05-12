@@ -1,37 +1,66 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, toRaw } from 'vue';
 import UserInfo from './UserInfo.vue';
 import IconThumbUp from './icons/IconThumbUp.vue';
 import AvatarIcon from './AvatarIcon.vue';
 import IconLoad from './icons/IconLoad.vue';
 import FacebookImgPeek from './FacebookImgPeek.vue';
+import axios from 'axios';
 
-defineProps<{
-  avatarUrl?: string;
-  name?: string;
-  createdAt?: string;
-  content?: string;
-  imgUrl?: Array<string>;
-  likes?: Array<string>;
-  messages?: {
-    _id: string;
+interface message {
+  _id: string;
+  createdAt: string;
+  content: string;
+  user: {
     name: string;
-    avatarUrl: string;
-    createdAt: string;
-    content: string;
-  }[];
-}>();
-
-const sendingMessage = ref(false);
-
-function sendMessage() {
-  sendingMessage.value = true;
-  setTimeout(() => {
-    sendingMessage.value = false;
-  }, 1000);
+    avatar?: string;
+  };
 }
 
-function toLocalDate(date: string | undefined) {
+const props = defineProps<{
+  id: string;
+  avatar?: string;
+  name: string;
+  createdAt: string;
+  content: string;
+  images?: Array<string>;
+  likes?: Array<string>;
+  messages?: message[];
+}>();
+
+const msg = toRaw(props.messages);
+const innerMessages = ref(msg);
+
+const sendingMessage = ref(false);
+const messageContent = ref('');
+
+function sendMessage() {
+  const content = messageContent.value.trim();
+  if (content.length < 1) return;
+
+  sendingMessage.value = true;
+
+  axios({
+    method: 'post',
+    url: `http://127.0.0.1:3005/posts/${props.id}`,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('metaWall')}`,
+    },
+    data: { content },
+  })
+    .then((res) => {
+      sendingMessage.value = false;
+      messageContent.value = '';
+      innerMessages.value = res.data.data.messages;
+    })
+    .catch(() => {
+      sendingMessage.value = false;
+      messageContent.value = '';
+      window.alert('新增留言失敗，請稍後再試');
+    });
+}
+
+function toLocaleDate(date: string | undefined) {
   if (!date) return;
   const d = new Date(date);
   return d.toLocaleString();
@@ -44,17 +73,14 @@ function toLocalDate(date: string | undefined) {
   >
     <UserInfo
       :size="45"
-      :avatar-url="avatarUrl"
+      :avatar-url="avatar"
       :title="name"
-      :subtitle="toLocalDate(createdAt)"
+      :subtitle="toLocaleDate(createdAt)"
     ></UserInfo>
 
     <pre class="my-4 whitespace-pre-wrap">{{ content }}</pre>
 
-    <FacebookImgPeek
-      @click="$emit('showLightBox')"
-      :img-url="imgUrl"
-    ></FacebookImgPeek>
+    <FacebookImgPeek :images="images"></FacebookImgPeek>
 
     <div class="mt-4 flex items-center">
       <IconThumbUp
@@ -81,6 +107,7 @@ function toLocalDate(date: string | undefined) {
           type="search"
           class="flex-1 border-0 px-3 py-1.5 focus:border-primary dark:bg-gray-700"
           placeholder="留言..."
+          v-model="messageContent"
         />
         <div
           @click="sendMessage"
@@ -97,15 +124,15 @@ function toLocalDate(date: string | undefined) {
     </div>
 
     <div
-      v-for="message of messages"
+      v-for="message of innerMessages"
       class="mt-4 rounded-lg bg-bg-light p-4 dark:border-gray-500 dark:bg-gray-800"
       :key="message._id"
     >
       <UserInfo
         :size="40"
-        :img-url="message.avatarUrl"
-        :title="message.name"
-        :subtitle="message.createdAt"
+        :img-url="message.user.avatar"
+        :title="message.user.name"
+        :subtitle="toLocaleDate(message.createdAt)"
       ></UserInfo>
       <div class="ml-[calc(40px+1rem)] whitespace-pre-wrap">
         {{ message.content }}

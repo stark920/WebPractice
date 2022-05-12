@@ -9,6 +9,18 @@ const user = useUserStore();
 const dataLoaded = ref(false);
 
 onMounted(() => {
+  // check dark mode
+  if (
+    localStorage.theme === 'dark' ||
+    (!('theme' in localStorage) &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches)
+  ) {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+
+  // check token
   const token = localStorage.getItem('metaWall');
   if (!token) {
     dataLoaded.value = true;
@@ -27,7 +39,6 @@ onMounted(() => {
       user.name = res.data.data.name;
       user.avatar = res.data.data.avatar;
       dataLoaded.value = true;
-      router.push({ name: 'home' });
     })
     .catch(() => {
       // token expired, nothing to do
@@ -41,8 +52,17 @@ onMounted(() => {
     v-else
     class="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-bg-light dark:bg-bg-dark"
   >
-    <IconLoad
-      class="h-12 w-12 animate-spin text-black dark:text-gray-300"
-    ></IconLoad>
+    <div class="grid animate-pulse">
+      <div
+        class="font-paytone text-4xl tracking-wider text-black dark:text-gray-300"
+      >
+        MetaWall
+      </div>
+      <div class="mt-4 flex justify-center">
+        <IconLoad
+          class="h-8 w-8 animate-spin text-black dark:text-gray-300"
+        ></IconLoad>
+      </div>
+    </div>
   </div>
 </template>

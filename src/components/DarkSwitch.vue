@@ -1,25 +1,21 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import IconSun from './icons/IconSun.vue';
 import IconMoon from './icons/IconMoon.vue';
 
 const isDark = ref('light');
 
-onMounted(() => {
+onBeforeMount(() => {
   if (
     localStorage.theme === 'dark' ||
     (!('theme' in localStorage) &&
       window.matchMedia('(prefers-color-scheme: dark)').matches)
   ) {
     isDark.value = 'dark';
-    document.documentElement.classList.add('dark');
-  } else {
-    isDark.value = 'light';
-    document.documentElement.classList.remove('dark');
   }
 });
 
-const toggleDarkMode = () => {
+function toggleDarkMode() {
   if (isDark.value === 'light') {
     isDark.value = 'dark';
     localStorage.theme = 'dark';
@@ -29,7 +25,7 @@ const toggleDarkMode = () => {
     localStorage.theme = 'light';
     document.documentElement.classList.remove('dark');
   }
-};
+}
 </script>
 
 <template>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 interface Props {
   size?: number;
-  avatarUrl?: string;
+  avatar?: string;
 }
 withDefaults(defineProps<Props>(), {
   size: 40,
-  avatarUrl: 'user_default.png',
+  avatar: 'user_default.png',
 });
 
 function getImageUrl(url: string) {
@@ -16,6 +16,6 @@ function getImageUrl(url: string) {
 
 <template>
   <div class="rounded-full" :style="`width: ${size}px; height: ${size}px`">
-    <img :src="getImageUrl(avatarUrl)" class="w-full object-contain" />
+    <img :src="getImageUrl(avatar)" class="w-full object-contain" />
   </div>
 </template>

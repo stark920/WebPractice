@@ -22,7 +22,7 @@ const modules = [Navigation, Pagination];
     :pagination="{ clickable: true }"
     :class="{ fixed: lightBox.show, hidden: !lightBox.show }"
     class="top-0 bottom-0 left-0 right-0 z-50 bg-[rgba(0,0,0,0.8)]"
-    @click="lightBox.close()"
+    @click.self="lightBox.close()"
   >
     <div
       class="absolute top-4 left-4 z-50 flex h-[40px] w-[40px] cursor-pointer items-center justify-center rounded-full bg-[rgba(0,0,0,.1)] hover:bg-[rgba(255,255,255,.2)]"

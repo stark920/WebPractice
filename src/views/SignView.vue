@@ -17,7 +17,7 @@ if (user.name) {
 
   <main class="flex h-screen w-screen items-center justify-center">
     <div
-      class="custom-border dark:dark-card flex w-11/12 max-w-[900px] items-center bg-white px-6 py-8 md:px-12 md:py-16"
+      class="custom-border dark:dark-card sign-shadow flex w-11/12 max-w-[900px] items-center bg-white px-6 py-8 md:px-12 md:py-16"
     >
       <div class="hidden md:block">
         <img src="@/assets/login_page.svg" alt="login_banner" />
@@ -33,3 +33,13 @@ if (user.name) {
     </div>
   </main>
 </template>
+
+<style scoped>
+.sign-shadow {
+  box-shadow: -8px 8px 0px #00040029;
+}
+
+.dark .sign-shadow {
+  box-shadow: -8px 8px 0px #ffffff69;
+}
+</style>

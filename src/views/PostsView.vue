@@ -12,17 +12,16 @@ const postsLoading = ref(true);
 interface image {
   url: string;
 }
-interface message {
-  _id: string;
-  name: string;
-  avatarUrl: string;
-  createdAt: string;
-  content: string;
-}
 interface user {
   _id: string;
   name: string;
   avatar: string | undefined;
+}
+interface message {
+  _id: string;
+  createdAt: string;
+  content: string;
+  user: user;
 }
 interface post {
   _id: string;
@@ -102,19 +101,19 @@ function getImagesUrl(images: Array<image | null>) {
         content="目前尚無動態，新增一則貼文吧！"
       ></EmptyCard>
 
-      <template v-else>
+      <template v-else v-for="post of posts" :key="post._id">
         <PostCard
-          v-for="post of posts"
-          :key="post._id"
+          :id="post._id"
           :name="post.user.name"
           :createdAt="post.createdAt"
           :content="post.content"
-          :avatar-url="post.user.avatar"
-          :imgUrl="getImagesUrl(post.images)"
+          :avatar="post.user.avatar"
+          :images="getImagesUrl(post.images)"
           :messages="post.messages"
         />
-        <EmptyCard content="沒有其他貼文了！"></EmptyCard>
       </template>
+
+      <EmptyCard content="沒有其他貼文了！"></EmptyCard>
     </div>
   </div>
 </template>

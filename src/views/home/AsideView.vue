@@ -14,7 +14,7 @@ const user = useUserStore();
     <router-link to="/home/post">
       <button
         type="button"
-        class="primary-color custom-border mb-6 w-full rounded-lg py-3 font-azeret font-bold"
+        class="primary-color custom-border mb-6 w-full rounded-lg py-3 font-azeret font-bold shadow-sm shadow-black"
       >
         張貼動態
       </button>
