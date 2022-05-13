@@ -1,0 +1,1 @@
+import{x as t,d as a,o,c as r,t as s}from"./index.aa2e47f7.js";const c={class:"custom-border dark:dark-card shadow-block flex w-full items-center justify-center bg-white py-4 font-azeret text-xl font-bold"},l=a({props:{title:null},setup(e){return(_,n)=>(o(),r("div",c,s(e.title),1))}});var i=t(l,[["__scopeId","data-v-46f1eefa"]]);export{i as T};
