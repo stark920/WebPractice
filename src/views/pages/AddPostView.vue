@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import TitleCard from '../components/TitleCard.vue';
-import IconTrash from '../components/icons/IconTrash.vue';
-import IconLoad from '../components/icons/IconLoad.vue';
-import SwiperImgs from '../components/SwiperImgs.vue';
+import TitleCard from '@/components/TitleCard.vue';
+import IconTrash from '@/components/icons/IconTrash.vue';
+import IconLoad from '@/components/icons/IconLoad.vue';
+import SwiperImgs from '@/components/SwiperImgs.vue';
 import imageCompression from 'browser-image-compression';
-import { useLightBoxStore } from '@/stores/lightBox';
-import axios from 'axios';
 import { reactive, ref } from 'vue';
+import { useLightBoxStore } from '@/stores/lightBox';
+import { computed } from '@vue/reactivity';
+import { apiPost } from '@/utils/axiosApi';
 
 const lightBox = useLightBoxStore();
 
@@ -17,7 +18,6 @@ interface posts {
   isUploading: boolean;
   isSending: boolean;
   reset: () => undefined;
-  check: () => boolean;
 }
 
 const post: posts = reactive({
@@ -26,15 +26,18 @@ const post: posts = reactive({
   blobUrls: [],
   isUploading: false,
   isSending: false,
-  reset: () => {
-    post.content = '';
-    post.images.length = 0;
-    post.blobUrls.length = 0;
+  reset() {
+    this.content = '';
+    this.images.length = 0;
+    this.blobUrls.length = 0;
     return undefined;
   },
-  check: () => {
-    return post.content.length > 0 && !post.isUploading ? true : false;
-  },
+});
+
+const checkPost = computed(() => {
+  if (post.content.trim().length < 1) return false;
+  if (post.isUploading) return false;
+  return true;
 });
 
 const uploadImages = ref<HTMLInputElement | null>();
@@ -42,22 +45,18 @@ const allowImageTypes = 'image/jpg, image/jpeg, image/png';
 const alertMessage = ref('');
 
 async function sendPost() {
-  if (!post.check()) return;
+  if (!checkPost) return;
+
+  const token = localStorage.getItem('metaWall');
+
+  if (!token) return;
 
   post.isSending = true;
 
   const data = await createPostFormData();
 
-  const option = {
-    method: 'post',
-    url: 'https://enigmatic-reef-71098.herokuapp.com/post',
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('metaWall')}`,
-    },
-    data,
-  };
-
-  axios(option)
+  apiPost
+    .upload(data, token)
     .then(() => {
       post.isSending = false;
       post.reset();
@@ -153,7 +152,7 @@ function showLightBox(data: Array<string>) {
         >上傳圖片</label
       >
       <input
-        @change="handleImageUpload()"
+        @change="handleImageUpload"
         class="hidden"
         type="file"
         ref="uploadImages"
@@ -205,11 +204,11 @@ function showLightBox(data: Array<string>) {
       <button
         type="button"
         :class="{
-          'primary-color border-black': post.check(),
-          'cursor-not-allowed border-gray-500 bg-gray-400': !post.check(),
+          'primary-color border-black': checkPost,
+          'cursor-not-allowed border-gray-500 bg-gray-400': !checkPost,
           'cursor-wait': post.isSending,
         }"
-        :disabled="!post.check()"
+        :disabled="!checkPost"
         class="mx-auto flex w-full max-w-[300px] items-center justify-center rounded-lg border-2 py-3 text-white"
         @click="sendPost"
       >

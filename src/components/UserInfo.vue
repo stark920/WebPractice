@@ -27,7 +27,7 @@ withDefaults(defineProps<Props>(), {
 
     <div class="ml-4">
       <router-link :to="toLink(id) || ''">
-        <div class="font-sans font-bold">
+        <div class="font-sans font-bold hover:text-primary hover:underline">
           {{ title }}
         </div>
       </router-link>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import AvatarIcon from '../../components/AvatarIcon.vue';
-import DarkSwitch from '../../components/DarkSwitch.vue';
+import AvatarIcon from '@/components/AvatarIcon.vue';
+import DarkSwitcher from '@/components/DarkSwitcher.vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 const router = useRouter();
@@ -28,7 +28,7 @@ function signOut() {
       </router-link>
       <div class="flex select-none items-center">
         <div class="mr-4">
-          <DarkSwitch></DarkSwitch>
+          <DarkSwitcher></DarkSwitcher>
         </div>
         <div class="relative flex items-center">
           <AvatarIcon :size="30" class="mr-2" />

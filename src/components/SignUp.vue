@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import axios from 'axios';
+import IconLoad from '@/components/icons/IconLoad.vue';
 import { reactive } from 'vue';
+import { computed } from '@vue/reactivity';
+import { apiUser } from '@/utils/axiosApi';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 const router = useRouter();
@@ -11,7 +13,7 @@ const signUp = reactive({
   name: '',
   email: '',
   password: '',
-  checkName: () => {
+  checkName: computed(() => {
     if (signUp.name === '') return;
     if (signUp.name.indexOf(' ') > -1) {
       return '暱稱不可包含空白字元';
@@ -21,15 +23,15 @@ const signUp = reactive({
       return '暱稱需輸入 2~10 個字元';
     }
     return;
-  },
-  checkEmail: () => {
+  }),
+  checkEmail: computed(() => {
     if (signUp.email === '') return;
     if (!signUp.email.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)) {
       return '信箱格式不正確';
     }
     return;
-  },
-  checkPassword: () => {
+  }),
+  checkPassword: computed(() => {
     if (signUp.password === '') return;
     if (signUp.password.indexOf(' ') > -1) {
       return '密碼不可包含空白字元';
@@ -38,34 +40,30 @@ const signUp = reactive({
       return '密碼需輸入 8~20 個字元';
     }
     return;
-  },
-  checkContent: () => {
+  }),
+  checkContent: computed(() => {
     if (signUp.name && signUp.email && signUp.password) {
-      if (
-        !signUp.checkName() &&
-        !signUp.checkEmail() &&
-        !signUp.checkPassword()
-      ) {
+      if (!signUp.checkName && !signUp.checkEmail && !signUp.checkPassword) {
         return true;
       }
     }
     return false;
-  },
-  reset: () => {
-    signUp.isSending = false;
-    signUp.name = '';
-    signUp.email = '';
-    signUp.password = '';
+  }),
+  reset() {
+    this.isSending = false;
+    this.name = '';
+    this.email = '';
+    this.password = '';
   },
 });
 
-function postSignUp() {
-  if (!signUp.checkContent()) return;
+const postSignUp = () => {
+  if (!signUp.checkContent) return;
 
   signUp.isSending = true;
 
-  axios
-    .post('https://enigmatic-reef-71098.herokuapp.com/user/sign_up', {
+  apiUser
+    .signUp({
       name: signUp.name.trim(),
       email: signUp.email.toLowerCase(),
       password: signUp.password.trim(),
@@ -83,19 +81,19 @@ function postSignUp() {
       signUp.reset();
       window.alert(error.response.data.message);
     });
-}
+};
 </script>
 
 <template>
   <p class="text-center font-sans text-2xl font-bold">註冊</p>
-  <div class="grid px-9 pt-9 font-azeret" @keyup.enter.stop="postSignUp()">
+  <div class="grid px-9 pt-9 font-azeret" @keyup.enter.stop="postSignUp">
     <input
       class="custom-border focus:border-primary dark:text-black"
       type="text"
       placeholder="暱稱"
       v-model="signUp.name"
     />
-    <span class="text-alert">{{ signUp.checkName() }}</span>
+    <span class="text-alert">{{ signUp.checkName }}</span>
     <input
       class="custom-border mt-4 focus:border-primary dark:text-black"
       type="email"
@@ -103,27 +101,30 @@ function postSignUp() {
       v-model="signUp.email"
       @input="signUp.email = signUp.email.toLowerCase()"
     />
-    <span class="text-alert">{{ signUp.checkEmail() }}</span>
+    <span class="text-alert">{{ signUp.checkEmail }}</span>
     <input
       class="custom-border mt-4 focus:border-primary dark:text-black"
       type="password"
       placeholder="Password"
       v-model="signUp.password"
     />
-    <span class="text-alert">{{ signUp.checkPassword() }}</span>
+    <span class="text-alert">{{ signUp.checkPassword }}</span>
     <button
       type="button"
       :class="{
-        'primary-color border-black': signUp.checkContent(),
+        'primary-color border-black': signUp.checkContent,
         'cursor-not-allowed border-gray-500 bg-gray-400 text-white':
-          !signUp.checkContent(),
+          !signUp.checkContent,
         'cursor-wait': signUp.isSending,
       }"
-      class="custom-border mt-8 rounded-lg py-2 shadow-sm shadow-black"
-      :disabled="!signUp.checkContent() || signUp.isSending"
-      @click="postSignUp()"
+      class="custom-border mt-8 flex items-center justify-center rounded-lg py-3 shadow-sm shadow-black"
+      :disabled="!signUp.checkContent || signUp.isSending"
+      @click="postSignUp"
     >
-      註冊
+      <span>
+        {{ signUp.isSending ? '註冊中...' : '註冊' }}
+      </span>
+      <IconLoad v-show="signUp.isSending" class="ml-1 animate-spin"></IconLoad>
     </button>
     <Router-link to="/" class="mx-auto mt-2 inline-block p-1">登入</Router-link>
   </div>

@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import IconLoad from './components/icons/IconLoad.vue';
-import axios from 'axios';
 import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import IconLoad from './components/icons/IconLoad.vue';
+import { apiUser } from '@/utils/axiosApi';
 import { useUserStore } from '@/stores/user';
-const router = useRouter();
 const user = useUserStore();
 const dataLoaded = ref(false);
 
@@ -27,13 +25,8 @@ onMounted(() => {
     return;
   }
 
-  axios({
-    method: 'get',
-    url: 'https://enigmatic-reef-71098.herokuapp.com/user',
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+  apiUser
+    .check(token)
     .then((res) => {
       user.id = res.data.data._id;
       user.name = res.data.data.name;

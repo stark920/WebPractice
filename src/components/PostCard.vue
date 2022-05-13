@@ -5,7 +5,7 @@ import IconThumbUp from './icons/IconThumbUp.vue';
 import AvatarIcon from './AvatarIcon.vue';
 import IconLoad from './icons/IconLoad.vue';
 import FacebookImgPeek from './FacebookImgPeek.vue';
-import axios from 'axios';
+import { apiPost } from '@/utils/axiosApi';
 
 interface message {
   _id: string;
@@ -29,25 +29,27 @@ const props = defineProps<{
 }>();
 
 const msg = toRaw(props.messages);
+// const like = toRaw(props.likes);
+
 const innerMessages = ref(msg);
+// const innerLikes = ref(like);
 
 const sendingMessage = ref(false);
 const messageContent = ref('');
 
 function sendMessage() {
   const content = messageContent.value.trim();
+
   if (content.length < 1) return;
+
+  const token = localStorage.getItem('metaWall');
+
+  if (!token) return;
 
   sendingMessage.value = true;
 
-  axios({
-    method: 'post',
-    url: `https://enigmatic-reef-71098.herokuapp.com/post/${props.id}`,
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('metaWall')}`,
-    },
-    data: { content },
-  })
+  apiPost
+    .message(`${props.id}`, { content }, token)
     .then((res) => {
       sendingMessage.value = false;
       messageContent.value = '';

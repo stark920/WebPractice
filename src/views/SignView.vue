@@ -1,18 +1,21 @@
 <script setup lang="ts">
-import DarkSwitch from '@/components/DarkSwitch.vue';
+import DarkSwitcher from '@/components/DarkSwitcher.vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
+import { onBeforeMount } from 'vue';
 const router = useRouter();
 const user = useUserStore();
 
-if (user.name) {
-  router.replace({ name: 'home' });
-}
+onBeforeMount(() => {
+  if (user.name) {
+    router.replace({ name: 'home' });
+  }
+});
 </script>
 
 <template>
   <div class="fixed top-2 right-2">
-    <DarkSwitch></DarkSwitch>
+    <DarkSwitcher></DarkSwitcher>
   </div>
 
   <main class="flex h-screen w-screen items-center justify-center">
@@ -40,6 +43,6 @@ if (user.name) {
 }
 
 .dark .sign-shadow {
-  box-shadow: -8px 8px 0px #ffffff69;
+  box-shadow: -8px 8px 0px #eeeeee29;
 }
 </style>

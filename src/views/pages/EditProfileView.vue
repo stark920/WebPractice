@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import TitleCard from '../components/TitleCard.vue';
+import TitleCard from '@/components/TitleCard.vue';
+import AvatarIcon from '@/components/AvatarIcon.vue';
 import { ref, reactive } from 'vue';
-import AvatarIcon from '../components/AvatarIcon.vue';
 const currentCard = ref('name');
 const validateMessage = ref(['']);
 const passwordObj = reactive({

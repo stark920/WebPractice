@@ -4,10 +4,16 @@
 
 @layer base {
   body {
-    @apply bg-bg-light font-sans text-black;
+    @apply font-sans text-black;
+    background: linear-gradient(to top, transparent 60px, #cccccc 62px),
+      linear-gradient(to left, #efece7 60px, #cccccc 62px);
+    background-size: 62px 62px;
   }
   .dark body {
     @apply bg-bg-dark text-white;
+    background: linear-gradient(to top, transparent 60px, #333333 62px),
+      linear-gradient(to left, #111827 60px, #333333 62px);
+    background-size: 62px 62px;
   }
 }
 

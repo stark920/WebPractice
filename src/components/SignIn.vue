@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import axios from 'axios';
 import { reactive } from 'vue';
+import { computed } from '@vue/reactivity';
+import { apiUser } from '@/utils/axiosApi';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/user';
 const router = useRouter();
@@ -11,14 +12,14 @@ const signIn = reactive({
   email: '',
   password: '',
   loginResult: '',
-  checkEmail: () => {
+  checkEmail: computed(() => {
     if (signIn.email === '') return;
     if (!signIn.email.match(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/)) {
       return '信箱格式不正確';
     }
     return;
-  },
-  checkPassword: () => {
+  }),
+  checkPassword: computed(() => {
     if (signIn.password === '') return;
     if (signIn.password.indexOf(' ') > -1) {
       return '密碼不可包含空白字元';
@@ -27,27 +28,29 @@ const signIn = reactive({
       return '密碼需輸入 8~20 個字元';
     }
     return;
-  },
-  checkContent: () => {
+  }),
+  checkContent: computed(() => {
     if (signIn.email && signIn.password) {
-      if (!signIn.checkEmail() && !signIn.checkPassword()) {
+      if (!signIn.checkEmail && !signIn.checkPassword) {
         return true;
       }
     }
     return false;
-  },
-  reset: () => {
-    signIn.isSending = false;
-    signIn.email = '';
-    signIn.password = '';
+  }),
+  reset() {
+    this.isSending = false;
+    this.email = '';
+    this.password = '';
   },
 });
 
-function postSignIn() {
-  if (!signIn.checkContent()) return;
+const postSignIn = () => {
+  if (!signIn.checkContent) return;
 
-  axios
-    .post('https://enigmatic-reef-71098.herokuapp.com/user/sign_in', {
+  signIn.isSending = true;
+
+  apiUser
+    .signIn({
       email: signIn.email.toLowerCase(),
       password: signIn.password,
     })
@@ -66,17 +69,14 @@ function postSignIn() {
         signIn.loginResult = '';
       }, 2000);
     });
-}
+};
 </script>
 
 <template>
   <p class="w-full text-center font-sans text-2xl font-bold">
     到元宇宙展開全新社交圈
   </p>
-  <div
-    class="grid w-full px-9 pt-9 font-azeret"
-    @keyup.enter.stop="postSignIn()"
-  >
+  <div class="grid w-full px-9 pt-9 font-azeret" @keyup.enter.stop="postSignIn">
     <input
       class="custom-border w-full focus:border-primary dark:text-black"
       type="email"
@@ -90,22 +90,21 @@ function postSignIn() {
       placeholder="Password"
       v-model="signIn.password"
     />
-    <p class="mt-4 w-full text-center text-alert">{{ signIn.checkEmail() }}</p>
-    <p class="w-full text-center text-alert">{{ signIn.checkPassword() }}</p>
+    <p class="mt-4 w-full text-center text-alert">{{ signIn.checkEmail }}</p>
+    <p class="w-full text-center text-alert">{{ signIn.checkPassword }}</p>
     <p class="w-full text-center text-alert">{{ signIn.loginResult }}</p>
     <button
       type="button"
       :class="{
-        'primary-color border-black': signIn.checkContent(),
-        'cursor-not-allowed border-gray-500 bg-gray-400 text-white':
-          !signIn.checkContent(),
-        'cursor-wait': signIn.isSending,
+        'primary-color cursor-pointer border-black': !signIn.isSending,
+        'cursor-wait border-gray-500 bg-gray-400 text-white': signIn.isSending,
       }"
-      class="custom-border mt-8 w-full rounded-lg py-2 shadow-sm shadow-black"
-      :disabled="!signIn.checkContent() || signIn.isSending"
-      @click="postSignIn()"
+      class="custom-border mt-8 flex w-full items-center justify-center rounded-lg py-3 shadow-sm shadow-black"
+      :disabled="!signIn.checkContent || signIn.isSending"
+      @click="postSignIn"
     >
-      登入
+      <span>{{ signIn.isSending ? '登入中...' : '登入' }}</span>
+      <IconLoad v-show="signIn.isSending" class="ml-1 animate-spin"></IconLoad>
     </button>
     <Router-link to="/signUp" class="mx-auto mt-2 inline-block p-1"
       >註冊帳號</Router-link

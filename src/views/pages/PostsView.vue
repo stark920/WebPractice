@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import axios from 'axios';
-import IconSearch from '../components/icons/IconSearch.vue';
-import PostCard from '../components/PostCard.vue';
-import EmptyCard from '../components/EmptyCard.vue';
+import IconSearch from '@/components/icons/IconSearch.vue';
+import PostCard from '@/components/PostCard.vue';
+import EmptyCard from '@/components/EmptyCard.vue';
+import PulsePostCard from '@/components/PulsePostCard.vue';
+import SwiperImgs from '@/components/SwiperImgs.vue';
 import { onMounted, ref } from 'vue';
-import PulsePostCard from '../components/PulsePostCard.vue';
-import SwiperImgs from '../components/SwiperImgs.vue';
+import { apiPost } from '@/utils/axiosApi';
 
 const postsLoading = ref(true);
 
@@ -36,13 +36,10 @@ interface post {
 let posts = ref<post[]>([]);
 
 onMounted(() => {
-  axios({
-    method: 'get',
-    url: 'https://enigmatic-reef-71098.herokuapp.com/posts',
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('metaWall')}`,
-    },
-  }).then((res) => {
+  const token = localStorage.getItem('metaWall');
+  if (!token) return;
+
+  apiPost.getAll('', token).then((res) => {
     posts.value = res.data.data;
     postsLoading.value = false;
   });

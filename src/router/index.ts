@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import PostsView from '@/views/PostsView.vue';
+import PostsView from '@/views/pages/PostsView.vue';
 import HomeView from '@/views/HomeView.vue';
 import SignView from '@/views/SignView.vue';
 import SignInVue from '@/components/SignIn.vue';
@@ -35,12 +35,12 @@ const router = createRouter({
         {
           path: 'profile/edit',
           name: 'profile/edit',
-          component: () => import('../views/EditProfileView.vue'),
+          component: () => import('../views/pages/EditProfileView.vue'),
         },
         {
           path: 'post',
           name: 'post',
-          component: () => import('../views/AddPostView.vue'),
+          component: () => import('../views/pages/AddPostView.vue'),
         },
       ],
     },

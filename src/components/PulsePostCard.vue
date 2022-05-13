@@ -2,7 +2,6 @@
 import UserInfo from './UserInfo.vue';
 import IconThumbUp from './icons/IconThumbUp.vue';
 import AvatarIcon from './AvatarIcon.vue';
-import IconLoad from './icons/IconLoad.vue';
 import FacebookImgPeek from './FacebookImgPeek.vue';
 </script>
 
@@ -33,7 +32,6 @@ import FacebookImgPeek from './FacebookImgPeek.vue';
           class="flex h-full w-2/12 cursor-pointer items-center justify-center border-l-2 border-black bg-primary text-white dark:border-gray-600"
         >
           留言
-          <IconLoad class="ml-2 h-4 w-4 animate-spin"></IconLoad>
         </div>
       </div>
     </div>
