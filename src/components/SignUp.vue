@@ -65,7 +65,7 @@ function postSignUp() {
   signUp.isSending = true;
 
   axios
-    .post('https://enigmatic-reef-71098.herokuapp.com/users/sign_up', {
+    .post('https://enigmatic-reef-71098.herokuapp.com/user/sign_up', {
       name: signUp.name.trim(),
       email: signUp.email.toLowerCase(),
       password: signUp.password.trim(),

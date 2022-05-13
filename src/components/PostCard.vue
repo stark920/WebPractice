@@ -42,7 +42,7 @@ function sendMessage() {
 
   axios({
     method: 'post',
-    url: `https://enigmatic-reef-71098.herokuapp.com/posts/${props.id}`,
+    url: `https://enigmatic-reef-71098.herokuapp.com/post/${props.id}`,
     headers: {
       Authorization: `Bearer ${localStorage.getItem('metaWall')}`,
     },

@@ -47,7 +47,7 @@ function postSignIn() {
   if (!signIn.checkContent()) return;
 
   axios
-    .post('https://enigmatic-reef-71098.herokuapp.com/users/sign_in', {
+    .post('https://enigmatic-reef-71098.herokuapp.com/user/sign_in', {
       email: signIn.email.toLowerCase(),
       password: signIn.password,
     })

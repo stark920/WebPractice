@@ -28,8 +28,8 @@ onMounted(() => {
   }
 
   axios({
-    method: 'post',
-    url: 'https://enigmatic-reef-71098.herokuapp.com/users',
+    method: 'get',
+    url: 'https://enigmatic-reef-71098.herokuapp.com/user',
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -41,7 +41,7 @@ onMounted(() => {
       dataLoaded.value = true;
     })
     .catch(() => {
-      // token expired, nothing to do
+      dataLoaded.value = true;
     });
 });
 </script>
