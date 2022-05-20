@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// const baseUrl = 'https://enigmatic-reef-71098.herokuapp.com';
-const baseUrl = 'http://127.0.0.1:3005'
+const baseUrl = 'https://enigmatic-reef-71098.herokuapp.com'
+// const baseUrl = 'http://127.0.0.1:3005'
 
 const usersRequest = axios.create({
   baseURL: `${baseUrl}/users`
