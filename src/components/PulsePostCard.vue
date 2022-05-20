@@ -2,7 +2,6 @@
 import UserInfo from './UserInfo.vue'
 import IconThumbUp from './icons/IconThumbUp.vue'
 import AvatarIcon from './AvatarIcon.vue'
-import FacebookImgPeek from './FacebookImgPeek.vue'
 </script>
 
 <template>
@@ -11,8 +10,6 @@ import FacebookImgPeek from './FacebookImgPeek.vue'
     <UserInfo></UserInfo>
 
     <pre class="my-4"></pre>
-
-    <FacebookImgPeek></FacebookImgPeek>
 
     <div class="mt-4 flex items-center">
       <IconThumbUp class="h-5 w-5 cursor-pointer"></IconThumbUp>

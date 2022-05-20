@@ -10,6 +10,7 @@ import { apiPost, checkToken } from '@/utils/axiosApi'
 const postsLoading = ref(true)
 
 interface image {
+  _id: string
   url: string
 }
 interface user {
@@ -17,7 +18,7 @@ interface user {
   name: string
   avatar: string | undefined
 }
-interface message {
+interface comment {
   _id: string
   createdAt: string
   content: string
@@ -27,13 +28,15 @@ interface post {
   _id: string
   user: user
   content: string
-  images: Array<image | null>
+  images: Array<image>
+  likesNum: number
+  likes: Array<string>
+  comments: Array<comment>
   createdAt: string
-  likes: Array<string | null>
-  comments?: Array<message>
+  updatedAt: string
 }
 
-let posts = ref<post[]>([])
+const posts = ref<post[]>([])
 
 onMounted(() => {
   if (!checkToken) return
@@ -44,16 +47,9 @@ onMounted(() => {
   })
 })
 
-function getImagesUrl(images: Array<image | null>) {
-  if (!images) return
-
-  const urls: string[] = []
-
-  images.forEach((image: image | null) => {
-    if (image?.url) urls.push(image.url)
-  })
-
-  return urls
+function getUrl(images: Array<image>) {
+  if (images.length === 0) return []
+  return images.map((img) => img.url)
 }
 </script>
 
@@ -98,7 +94,7 @@ function getImagesUrl(images: Array<image | null>) {
           :created-at="po.createdAt"
           :content="po.content"
           :avatar="po.user.avatar"
-          :images="getImagesUrl(po.images)"
+          :images="getUrl(po.images)"
           :comments="po.comments" />
       </template>
 

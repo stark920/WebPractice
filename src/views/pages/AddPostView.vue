@@ -60,8 +60,9 @@ async function sendPost() {
       post.reset()
       window.alert('貼文上傳成功！')
     })
-    .catch((err) => {
-      console.log(err)
+    .catch(() => {
+      post.isSending = false
+      post.reset()
       alertMessage.value = '貼文上傳失敗，請稍後再試！'
     })
 }

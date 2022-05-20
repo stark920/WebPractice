@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import IconLoad from './components/icons/IconLoad.vue'
-import { apiUser } from '@/utils/axiosApi'
+import { apiUser, checkToken } from '@/utils/axiosApi'
 import { useUserStore } from '@/stores/user'
 const user = useUserStore()
 const dataLoaded = ref(false)
@@ -19,18 +19,17 @@ onMounted(() => {
   }
 
   // check token
-  const token = localStorage.getItem('metaWall')
-  if (!token) {
+  if (!checkToken) {
     dataLoaded.value = true
     return
   }
 
   apiUser
-    .check(token)
+    .check()
     .then((res) => {
-      user.id = res.data.data._id
       user.name = res.data.data.name
       user.avatar = res.data.data.avatar
+      user.gender = res.data.data.gender
       dataLoaded.value = true
     })
     .catch(() => {

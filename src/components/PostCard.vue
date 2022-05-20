@@ -23,7 +23,7 @@ const props = defineProps<{
   name: string
   createdAt: string
   content: string
-  images?: Array<string>
+  images: Array<string>
   likes?: Array<string>
   comments?: comment[]
 }>()
