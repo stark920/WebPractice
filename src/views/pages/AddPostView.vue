@@ -7,7 +7,7 @@ import imageCompression from 'browser-image-compression';
 import { reactive, ref } from 'vue';
 import { useLightBoxStore } from '@/stores/lightBox';
 import { computed } from '@vue/reactivity';
-import { apiPost } from '@/utils/axiosApi';
+import { apiPost, checkToken } from '@/utils/axiosApi';
 
 const lightBox = useLightBoxStore();
 
@@ -47,22 +47,21 @@ const alertMessage = ref('');
 async function sendPost() {
   if (!checkPost) return;
 
-  const token = localStorage.getItem('metaWall');
-
-  if (!token) return;
+  if (!checkToken) return;
 
   post.isSending = true;
 
   const data = await createPostFormData();
 
   apiPost
-    .upload(data, token)
+    .upload(data)
     .then(() => {
       post.isSending = false;
       post.reset();
       window.alert('貼文上傳成功！');
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err);
       alertMessage.value = '貼文上傳失敗，請稍後再試！';
     });
 }
@@ -73,7 +72,7 @@ async function createPostFormData() {
   form.append('content', post.content);
 
   for (const image of post.images) {
-    await form.append('image', image);
+    await form.append('images', image);
   }
   return form;
 }

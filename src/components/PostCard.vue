@@ -5,9 +5,9 @@ import IconThumbUp from './icons/IconThumbUp.vue';
 import AvatarIcon from './AvatarIcon.vue';
 import IconLoad from './icons/IconLoad.vue';
 import FacebookImgPeek from './FacebookImgPeek.vue';
-import { apiPost } from '@/utils/axiosApi';
+import { apiPost, checkToken } from '@/utils/axiosApi';
 
-interface message {
+interface comment {
   _id: string;
   createdAt: string;
   content: string;
@@ -25,39 +25,36 @@ const props = defineProps<{
   content: string;
   images?: Array<string>;
   likes?: Array<string>;
-  messages?: message[];
+  comments?: comment[];
 }>();
 
-const msg = toRaw(props.messages);
+const msg = toRaw(props.comments);
 // const like = toRaw(props.likes);
 
-const innerMessages = ref(msg);
+const innerComments = ref(msg);
 // const innerLikes = ref(like);
 
-const sendingMessage = ref(false);
-const messageContent = ref('');
+const sendingComment = ref(false);
+const commentContent = ref('');
 
-function sendMessage() {
-  const content = messageContent.value.trim();
+function sendComment() {
+  const content = commentContent.value.trim();
 
   if (content.length < 1) return;
+  if (!checkToken) return;
 
-  const token = localStorage.getItem('metaWall');
-
-  if (!token) return;
-
-  sendingMessage.value = true;
+  sendingComment.value = true;
 
   apiPost
-    .message(`${props.id}`, { content }, token)
+    .comment(`${props.id}`, { content })
     .then((res) => {
-      sendingMessage.value = false;
-      messageContent.value = '';
-      innerMessages.value = res.data.data.messages;
+      sendingComment.value = false;
+      commentContent.value = '';
+      innerComments.value = res.data.data.comments;
     })
     .catch(() => {
-      sendingMessage.value = false;
-      messageContent.value = '';
+      sendingComment.value = false;
+      commentContent.value = '';
       window.alert('新增留言失敗，請稍後再試');
     });
 }
@@ -109,16 +106,16 @@ function toLocaleDate(date: string | undefined) {
           type="search"
           class="flex-1 border-0 px-3 py-1.5 focus:border-primary dark:bg-gray-700"
           placeholder="留言..."
-          v-model="messageContent"
+          v-model="commentContent"
         />
         <div
-          @click="sendMessage"
+          @click="sendComment"
           class="flex h-full cursor-pointer items-center justify-center border-l-2 border-black bg-primary px-4 text-white dark:border-gray-600"
-          :class="{ 'bg-warn text-black': sendingMessage }"
+          :class="{ 'bg-warn text-black': sendingComment }"
         >
           留言
           <IconLoad
-            v-show="sendingMessage"
+            v-show="sendingComment"
             class="ml-2 h-4 w-4 animate-spin"
           ></IconLoad>
         </div>
@@ -126,18 +123,18 @@ function toLocaleDate(date: string | undefined) {
     </div>
 
     <div
-      v-for="message of innerMessages"
+      v-for="comment of innerComments"
       class="mt-4 rounded-lg bg-bg-light p-4 dark:border-gray-500 dark:bg-gray-800"
-      :key="message._id"
+      :key="comment._id"
     >
       <UserInfo
         :size="40"
-        :img-url="message.user.avatar"
-        :title="message.user.name"
-        :subtitle="toLocaleDate(message.createdAt)"
+        :img-url="comment.user.avatar"
+        :title="comment.user.name"
+        :subtitle="toLocaleDate(comment.createdAt)"
       ></UserInfo>
       <div class="ml-[calc(40px+1rem)] whitespace-pre-wrap">
-        {{ message.content }}
+        {{ comment.content }}
       </div>
     </div>
   </div>

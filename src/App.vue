@@ -43,18 +43,15 @@ onMounted(() => {
   <router-view v-if="dataLoaded"></router-view>
   <div
     v-else
-    class="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-bg-light dark:bg-bg-dark"
-  >
+    class="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-bg-light dark:bg-bg-dark">
     <div class="grid animate-pulse">
       <div
-        class="font-paytone text-4xl tracking-wider text-black dark:text-gray-300"
-      >
+        class="font-paytone text-4xl tracking-wider text-black dark:text-gray-300">
         MetaWall
       </div>
       <div class="mt-4 flex justify-center">
         <IconLoad
-          class="h-8 w-8 animate-spin text-black dark:text-gray-300"
-        ></IconLoad>
+          class="h-8 w-8 animate-spin text-black dark:text-gray-300"></IconLoad>
       </div>
     </div>
   </div>

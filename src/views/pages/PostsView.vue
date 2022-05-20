@@ -5,7 +5,7 @@ import EmptyCard from '@/components/EmptyCard.vue';
 import PulsePostCard from '@/components/PulsePostCard.vue';
 import SwiperImgs from '@/components/SwiperImgs.vue';
 import { onMounted, ref } from 'vue';
-import { apiPost } from '@/utils/axiosApi';
+import { apiPost, checkToken } from '@/utils/axiosApi';
 
 const postsLoading = ref(true);
 
@@ -30,16 +30,15 @@ interface post {
   images: Array<image | null>;
   createdAt: string;
   likes: Array<string | null>;
-  messages?: Array<message>;
+  comments?: Array<message>;
 }
 
 let posts = ref<post[]>([]);
 
 onMounted(() => {
-  const token = localStorage.getItem('metaWall');
-  if (!token) return;
+  if (!checkToken) return;
 
-  apiPost.getAll('', token).then((res) => {
+  apiPost.getAll('').then((res) => {
     posts.value = res.data.data;
     postsLoading.value = false;
   });
@@ -106,7 +105,7 @@ function getImagesUrl(images: Array<image | null>) {
           :content="post.content"
           :avatar="post.user.avatar"
           :images="getImagesUrl(post.images)"
-          :messages="post.messages"
+          :comments="post.comments"
         />
       </template>
 

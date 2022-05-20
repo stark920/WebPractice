@@ -20,15 +20,13 @@ onBeforeMount(() => {
 
   <main class="flex h-screen w-screen items-center justify-center">
     <div
-      class="custom-border dark:dark-card sign-shadow flex w-11/12 max-w-[900px] items-center bg-white px-6 py-8 md:px-12 md:py-16"
-    >
+      class="custom-border dark:dark-card sign-shadow flex w-11/12 max-w-[900px] items-center bg-white px-6 py-8 md:px-12 md:py-16">
       <div class="hidden md:block">
         <img src="@/assets/login_page.svg" alt="login_banner" />
       </div>
       <div class="flex-1">
         <h1
-          class="text-center font-paytone text-6xl tracking-wide text-primary dark:brightness-150"
-        >
+          class="text-center font-paytone text-6xl tracking-wide text-primary dark:brightness-150">
           MetaWall
         </h1>
         <Router-view></Router-view>

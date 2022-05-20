@@ -1,0 +1,777 @@
+{
+	"info": {
+		"_postman_id": "c0f8563b-f08f-4dfc-9cc2-e8ace3ae18f2",
+		"name": "MetaWall(Final)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "使用者註冊",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"tester@ttt.ttt\",\"password\":\"tttttttt\",\"name\":\"tester\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/users/sign-up",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"users",
+								"sign-up"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "使用者登入",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"tester@ttt.ttt\",\"password\":\"tttttttt\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/users/sign-in",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"users",
+								"sign-in"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users (with token)",
+			"item": [
+				{
+					"name": "檢查授權",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{path}}/users/check",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"users",
+								"check"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "使用者登出",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{path}}/users/sign-out",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"users",
+								"sign-out"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新個人資訊",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "YYFFSS",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "gender",
+									"value": "male",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{path}}/users/profile",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"users",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新密碼",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"password\":\"tttttttt\",\"passwordConfirm\": \"tttttttt\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/users/profile/pwd",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"users",
+								"profile",
+								"pwd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得用戶資訊",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{path}}/users/profile/:id",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"users",
+								"profile",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6285211cd61f30fffe97da37"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "停用帳號",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"a124124@2244b.dc\", \"password\": \"12345678\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/users/deactivate",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"users",
+								"deactivate"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODQ3N2VkNmVjZDI1M2U1OTgzYmU2MSIsImlhdCI6MTY1Mjk3Njg2OSwiZXhwIjoxNjUzMDYzMjY5fQ.GWc1Xo3cVeuM0eB9DwpfYGl9pFxUYMziH_3hb-2bO4M",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Users (with token + admin)",
+			"item": [
+				{
+					"name": "取得全部會員資訊",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{path}}/users/admin",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"users",
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得使用者權限列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{path}}/users/admin/roles",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"users",
+								"admin",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改使用者資訊",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/users/admin/:id",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"users",
+								"admin",
+								":id"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6284b99a2ddc97d58c6abb54"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "刪除全部會員資料",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"secret\": \"justDoIt!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/users/admin/destroy",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"users",
+								"admin",
+								"destroy"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODQ3N2VkNmVjZDI1M2U1OTgzYmU2MSIsImlhdCI6MTY1Mjk3Njg2OSwiZXhwIjoxNjUzMDYzMjY5fQ.GWc1Xo3cVeuM0eB9DwpfYGl9pFxUYMziH_3hb-2bO4M",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Posts (need token)",
+			"item": [
+				{
+					"name": "上傳貼文",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "content",
+									"value": "formdata",
+									"type": "text"
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/Users/genos/Desktop/截圖 2022-05-10 下午8.23.42.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{path}}/posts",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得全部貼文",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{path}}/posts",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得貼文＋篩選",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3005/posts?skip=2&limit=1&sort=hot",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3005",
+							"path": [
+								"posts"
+							],
+							"query": [
+								{
+									"key": "skip",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "1"
+								},
+								{
+									"key": "sort",
+									"value": "hot"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增留言",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"content\": \"postman is coming\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/posts/:id",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"posts",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "62866f1ec987d46a88437ee8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "按讚/取消讚",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{path}}/posts/like/:id",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"posts",
+								"like",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "62866f1ec987d46a88437ee8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "刪除貼文(尚未完成)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:3005/post/627ce0f46b5792024cb2af1f",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3005",
+							"path": [
+								"post",
+								"627ce0f46b5792024cb2af1f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新貼文(尚未完成)",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3005/post/627ce0f46b5792024cb2af1f",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3005",
+							"path": [
+								"post",
+								"627ce0f46b5792024cb2af1f"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODQ3N2VkNmVjZDI1M2U1OTgzYmU2MSIsImlhdCI6MTY1MjkyODQyMSwiZXhwIjoxNjUzMDE0ODIxfQ.5SkIzvEsq6mr0y_FHf4r3kWyLDIBiW3Ny-HY9SGM2bo",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Posts (need token + admin)",
+			"item": [
+				{
+					"name": "刪除全部貼文",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"secret\":\"justDoIt!\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{path}}/posts/admin/destroy",
+							"host": [
+								"{{path}}"
+							],
+							"path": [
+								"posts",
+								"admin",
+								"destroy"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyODQ3N2VkNmVjZDI1M2U1OTgzYmU2MSIsImlhdCI6MTY1MjkyODQyMSwiZXhwIjoxNjUzMDE0ODIxfQ.5SkIzvEsq6mr0y_FHf4r3kWyLDIBiW3Ny-HY9SGM2bo",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "path",
+			"value": "http://127.0.0.1:3005",
+			"type": "string"
+		},
+		{
+			"key": "path",
+			"value": "https://enigmatic-reef-71098.herokuapp.com",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}

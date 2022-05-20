@@ -10,8 +10,7 @@ withDefaults(defineProps<Props>(), {
 <template>
   <div
     class="flex cursor-pointer items-center justify-center rounded-full border-2 border-black dark:border-gray-400"
-    :style="`width: ${size}px; height: ${size}px`"
-  >
+    :style="`width: ${size}px; height: ${size}px`">
     <slot />
   </div>
 </template>

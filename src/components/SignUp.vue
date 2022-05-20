@@ -69,10 +69,9 @@ const postSignUp = () => {
       password: signUp.password.trim(),
     })
     .then((res) => {
-      localStorage.setItem('metaWall', res.data.data.token);
-      user.id = res.data.data._id;
+      localStorage.setItem('metaWall', res.headers.authorization);
       user.name = res.data.data.name;
-      user.avatar = res.data.data.avatar;
+      user.gender = res.data.data.gender;
       signUp.reset();
       window.alert('註冊成功');
       router.push({ name: 'home' });

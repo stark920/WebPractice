@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import IconLoad from './icons/IconLoad.vue';
 import { reactive } from 'vue';
 import { computed } from '@vue/reactivity';
 import { apiUser } from '@/utils/axiosApi';
@@ -55,10 +56,10 @@ const postSignIn = () => {
       password: signIn.password,
     })
     .then((res) => {
-      localStorage.setItem('metaWall', res.data.data.token);
-      user.id = res.data.data._id;
+      localStorage.setItem('metaWall', res.headers.authorization);
       user.name = res.data.data.name;
-      user.avatar = res.data.data.avatar;
+      user.avatar = res.data.data.avatar || '';
+      user.gender = res.data.data.gender;
       signIn.reset();
       router.replace({ name: 'home' });
     })

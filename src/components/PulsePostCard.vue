@@ -7,8 +7,7 @@ import FacebookImgPeek from './FacebookImgPeek.vue';
 
 <template>
   <div
-    class="custom-border dark:dark-card shadow-black-3px mb-4 w-full animate-pulse rounded-lg bg-white p-6"
-  >
+    class="custom-border dark:dark-card shadow-black-3px mb-4 w-full animate-pulse rounded-lg bg-white p-6">
     <UserInfo></UserInfo>
 
     <pre class="my-4"></pre>
@@ -26,19 +25,16 @@ import FacebookImgPeek from './FacebookImgPeek.vue';
         <input
           type="search"
           class="flex-1 border-0 px-3 py-1.5 focus:border-primary dark:bg-gray-700"
-          placeholder="留言..."
-        />
+          placeholder="留言..." />
         <div
-          class="flex h-full w-2/12 cursor-pointer items-center justify-center border-l-2 border-black bg-primary text-white dark:border-gray-600"
-        >
+          class="flex h-full w-2/12 cursor-pointer items-center justify-center border-l-2 border-black bg-primary text-white dark:border-gray-600">
           留言
         </div>
       </div>
     </div>
 
     <div
-      class="mt-4 rounded-lg bg-bg-light p-4 dark:border-gray-500 dark:bg-gray-800"
-    >
+      class="mt-4 rounded-lg bg-bg-light p-4 dark:border-gray-500 dark:bg-gray-800">
       <UserInfo :size="40"></UserInfo>
       <div class="ml-[calc(40px+1rem)]"></div>
     </div>

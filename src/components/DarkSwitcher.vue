@@ -32,15 +32,13 @@ function toggleDarkMode() {
   <IconSun
     v-show="isDark === 'dark'"
     class="cursor-pointer text-gray-400 hover:text-white"
-    @click="toggleDarkMode"
-  >
+    @click="toggleDarkMode">
     <title>關閉夜間模式</title>
   </IconSun>
   <IconMoon
     v-show="isDark === 'light'"
     class="cursor-pointer self-center text-gray-400 hover:text-black"
-    @click="toggleDarkMode"
-  >
+    @click="toggleDarkMode">
     <title>夜間模式</title>
   </IconMoon>
 </template>

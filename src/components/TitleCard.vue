@@ -4,8 +4,7 @@ defineProps<{ title?: string }>();
 
 <template>
   <div
-    class="custom-border dark:dark-card shadow-block flex w-full items-center justify-center bg-white py-4 font-azeret text-xl font-bold"
-  >
+    class="custom-border dark:dark-card shadow-block flex w-full items-center justify-center bg-white py-4 font-azeret text-xl font-bold">
     {{ title }}
   </div>
 </template>

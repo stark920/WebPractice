@@ -29,7 +29,7 @@ const user = useUserStore();
     </router-link>
     <router-link to="/" class="group mb-4 flex items-center">
       <ButtonIcon
-        class="bg-light-blue group-hover:bg-primary group-hover:text-white dark:bg-gray-600 dark:group-hover:bg-gray-500"
+        class="bg-primary-light group-hover:bg-primary group-hover:text-white dark:bg-gray-600 dark:group-hover:bg-gray-500"
       >
         <IconBell class="h-6 w-6" />
       </ButtonIcon>
@@ -41,7 +41,7 @@ const user = useUserStore();
     </router-link>
     <router-link to="/" class="group flex items-center">
       <ButtonIcon
-        class="bg-light-blue group-hover:bg-primary group-hover:text-white dark:bg-gray-600 dark:group-hover:bg-gray-500"
+        class="bg-primary-light group-hover:bg-primary group-hover:text-white dark:bg-gray-600 dark:group-hover:bg-gray-500"
       >
         <IconThumbUp class="h-6 w-6" />
       </ButtonIcon>
@@ -53,9 +53,3 @@ const user = useUserStore();
     </router-link>
   </div>
 </template>
-
-<style>
-.bg-light-blue {
-  background-color: #e2edfa;
-}
-</style>

@@ -54,8 +54,7 @@ function validatePassword() {
         name="profile"
         id="name"
         checked
-        @click="toggleDisplayCard('name')"
-      />
+        @click="toggleDisplayCard('name')" />
       <label
         for="name"
         class="box-border block rounded-t-lg bg-white px-4 py-2 text-black peer-checked:bg-black peer-checked:text-white dark:bg-gray-800 dark:text-white dark:peer-checked:bg-gray-600"
@@ -69,8 +68,7 @@ function validatePassword() {
         value="password"
         name="profile"
         id="password"
-        @click="toggleDisplayCard('password')"
-      />
+        @click="toggleDisplayCard('password')" />
       <label
         for="password"
         class="block rounded-t-lg bg-white px-4 py-2 text-black peer-checked:bg-black peer-checked:text-white dark:bg-gray-800 dark:text-white dark:peer-checked:bg-gray-600"
@@ -80,8 +78,7 @@ function validatePassword() {
   </div>
   <div
     v-if="currentCard === 'name'"
-    class="shadow-black-3px custom-border dark:dark-card flex flex-col items-center rounded-lg bg-white p-8"
-  >
+    class="shadow-black-3px custom-border dark:dark-card flex flex-col items-center rounded-lg bg-white p-8">
     <AvatarIcon :size="107"></AvatarIcon>
     <div class="mt-5">
       <input type="file" id="uploadAvatar" class="hidden" />
@@ -97,8 +94,7 @@ function validatePassword() {
         id="name_input"
         type="text"
         class="custom-border w-full focus:border-primary dark:text-black"
-        placeholder="輸入暱稱"
-      />
+        placeholder="輸入暱稱" />
     </div>
     <div class="mt-5 w-full max-w-[300px]">
       <div>性別</div>
@@ -123,15 +119,13 @@ function validatePassword() {
     <button
       @click="validateInputs"
       type="button"
-      class="primary-color custom-border w-full max-w-[300px] rounded-lg py-3"
-    >
+      class="primary-color custom-border w-full max-w-[300px] rounded-lg py-3">
       送出更新
     </button>
   </div>
   <div
     v-else
-    class="shadow-black-3px custom-border dark:dark-card flex flex-col items-center rounded-lg bg-white p-8"
-  >
+    class="shadow-black-3px custom-border dark:dark-card flex flex-col items-center rounded-lg bg-white p-8">
     <div class="w-full max-w-[300px]">
       <label for="pwd" class="block">輸入新密碼</label>
       <input
@@ -140,8 +134,7 @@ function validatePassword() {
         type="password"
         class="custom-border w-full focus:border-primary dark:text-black"
         placeholder="請輸入新密碼"
-        v-model="passwordObj.input1"
-      />
+        v-model="passwordObj.input1" />
     </div>
     <div class="mt-5 w-full max-w-[300px]">
       <label for="pwd_double" class="block">再次輸入</label>
@@ -151,8 +144,7 @@ function validatePassword() {
         type="password"
         class="custom-border w-full focus:border-primary dark:text-black"
         placeholder="再次輸入新密碼"
-        v-model="passwordObj.input2"
-      />
+        v-model="passwordObj.input2" />
     </div>
     <div v-if="validateMessage" class="my-8 text-alert">
       <div v-for="(msg, index) of validateMessage" :key="index">{{ msg }}</div>
@@ -163,8 +155,7 @@ function validatePassword() {
         'primary-color border-black': pwdIsValid,
         'border-gray-500 bg-gray-400 ': !pwdIsValid,
       }"
-      class="w-full max-w-[300px] rounded-lg border-2 py-3 text-white"
-    >
+      class="w-full max-w-[300px] rounded-lg border-2 py-3 text-white">
       重設密碼
     </button>
   </div>
