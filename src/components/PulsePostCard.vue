@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import UserInfo from './UserInfo.vue';
-import IconThumbUp from './icons/IconThumbUp.vue';
-import AvatarIcon from './AvatarIcon.vue';
-import FacebookImgPeek from './FacebookImgPeek.vue';
+import UserInfo from './UserInfo.vue'
+import IconThumbUp from './icons/IconThumbUp.vue'
+import AvatarIcon from './AvatarIcon.vue'
+import FacebookImgPeek from './FacebookImgPeek.vue'
 </script>
 
 <template>

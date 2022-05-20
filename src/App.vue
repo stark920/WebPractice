@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import IconLoad from './components/icons/IconLoad.vue';
-import { apiUser } from '@/utils/axiosApi';
-import { useUserStore } from '@/stores/user';
-const user = useUserStore();
-const dataLoaded = ref(false);
+import { onMounted, ref } from 'vue'
+import IconLoad from './components/icons/IconLoad.vue'
+import { apiUser } from '@/utils/axiosApi'
+import { useUserStore } from '@/stores/user'
+const user = useUserStore()
+const dataLoaded = ref(false)
 
 onMounted(() => {
   // check dark mode
@@ -13,30 +13,30 @@ onMounted(() => {
     (!('theme' in localStorage) &&
       window.matchMedia('(prefers-color-scheme: dark)').matches)
   ) {
-    document.documentElement.classList.add('dark');
+    document.documentElement.classList.add('dark')
   } else {
-    document.documentElement.classList.remove('dark');
+    document.documentElement.classList.remove('dark')
   }
 
   // check token
-  const token = localStorage.getItem('metaWall');
+  const token = localStorage.getItem('metaWall')
   if (!token) {
-    dataLoaded.value = true;
-    return;
+    dataLoaded.value = true
+    return
   }
 
   apiUser
     .check(token)
     .then((res) => {
-      user.id = res.data.data._id;
-      user.name = res.data.data.name;
-      user.avatar = res.data.data.avatar;
-      dataLoaded.value = true;
+      user.id = res.data.data._id
+      user.name = res.data.data.name
+      user.avatar = res.data.data.avatar
+      dataLoaded.value = true
     })
     .catch(() => {
-      dataLoaded.value = true;
-    });
-});
+      dataLoaded.value = true
+    })
+})
 </script>
 
 <template>

@@ -1,16 +1,16 @@
 <script setup lang="ts">
 interface Props {
-  size?: number;
-  avatar?: string;
+  size?: number
+  avatar?: string
 }
 withDefaults(defineProps<Props>(), {
   size: 40,
-  avatar: 'user_default.png',
-});
+  avatar: 'user_default.png'
+})
 
 function getImageUrl(url: string) {
-  if (url.startsWith('http')) return url;
-  return new URL(`../assets/${url}`, import.meta.url).href;
+  if (url.startsWith('http')) return url
+  return new URL(`../assets/${url}`, import.meta.url).href
 }
 </script>
 

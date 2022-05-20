@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import ButtonIcon from '../../components/ButtonIcon.vue';
-import IconBell from '../../components/icons/IconBell.vue';
-import IconThumbUp from '../../components/icons/IconThumbUp.vue';
-import IconHome from '../../components/icons/IconHome.vue';
-import IconPlus from '../../components/icons/IconPlus.vue';
+import ButtonIcon from '../../components/ButtonIcon.vue'
+import IconBell from '../../components/icons/IconBell.vue'
+import IconThumbUp from '../../components/icons/IconThumbUp.vue'
+import IconHome from '../../components/icons/IconHome.vue'
+import IconPlus from '../../components/icons/IconPlus.vue'
 </script>
 
 <template>

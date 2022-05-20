@@ -1,8 +1,8 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
-import PostsView from '@/views/pages/PostsView.vue';
-import HomeView from '@/views/HomeView.vue';
-import SignView from '@/views/SignView.vue';
-import SignInVue from '@/components/SignIn.vue';
+import { createRouter, createWebHashHistory } from 'vue-router'
+import PostsView from '@/views/pages/PostsView.vue'
+import HomeView from '@/views/HomeView.vue'
+import SignView from '@/views/SignView.vue'
+import SignInVue from '@/components/SignIn.vue'
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
@@ -14,14 +14,14 @@ const router = createRouter({
         {
           path: '',
           name: 'signIn',
-          component: SignInVue,
+          component: SignInVue
         },
         {
           path: 'signUp',
           name: 'signUp',
-          component: () => import('@/components/SignUp.vue'),
-        },
-      ],
+          component: () => import('@/components/SignUp.vue')
+        }
+      ]
     },
     {
       path: '/home',
@@ -30,25 +30,25 @@ const router = createRouter({
         {
           path: '',
           name: 'home',
-          component: PostsView,
+          component: PostsView
         },
         {
           path: 'profile/edit',
           name: 'profile/edit',
-          component: () => import('../views/pages/EditProfileView.vue'),
+          component: () => import('../views/pages/EditProfileView.vue')
         },
         {
           path: 'post',
           name: 'post',
-          component: () => import('../views/pages/AddPostView.vue'),
-        },
-      ],
+          component: () => import('../views/pages/AddPostView.vue')
+        }
+      ]
     },
     {
       path: '/:catchAll(.*)',
-      redirect: { name: 'signIn' },
-    },
-  ],
-});
+      redirect: { name: 'signIn' }
+    }
+  ]
+})
 
-export default router;
+export default router

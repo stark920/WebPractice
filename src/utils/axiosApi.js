@@ -1,27 +1,27 @@
-import axios from 'axios';
+import axios from 'axios'
 
 // const baseUrl = 'https://enigmatic-reef-71098.herokuapp.com';
-const baseUrl = 'http://127.0.0.1:3005';
+const baseUrl = 'http://127.0.0.1:3005'
 
 const usersRequest = axios.create({
-  baseURL: `${baseUrl}/users`,
-});
+  baseURL: `${baseUrl}/users`
+})
 
 const postsRequest = axios.create({
-  baseURL: `${baseUrl}/posts`,
-});
+  baseURL: `${baseUrl}/posts`
+})
 
 function getToken() {
   return {
     headers: {
-      Authorization: localStorage.getItem('metaWall'),
-    },
-  };
+      Authorization: localStorage.getItem('metaWall')
+    }
+  }
 }
 
 export const checkToken = () => {
-  localStorage.getItem('metaWall') ? true : false;
-};
+  localStorage.getItem('metaWall') ? true : false
+}
 
 export const apiUser = {
   signIn: (data) => usersRequest.post('/sign-in', data),
@@ -30,13 +30,13 @@ export const apiUser = {
   updateProfile: (data) => usersRequest.patch('/profile', data, getToken()),
   updatePassword: (data) =>
     usersRequest.patch('/profile/pwd', data, getToken()),
-  getProfile: (id) => usersRequest.get(`/profile/${id}`, getToken()),
-};
+  getProfile: (id) => usersRequest.get(`/profile/${id}`, getToken())
+}
 
 export const apiPost = {
   getAll: (filter = '') => postsRequest.get(`/?${filter}`, getToken()),
   upload: (data) => postsRequest.post('', data, getToken()),
   comment: (id, data) => postsRequest.post(`/${id}`, data, getToken()),
   like: (id) => postsRequest.get(`/like/${id}`, getToken()),
-  update: (id, data) => postsRequest.patch(`/${id}`, data, getToken()),
-};
+  update: (id, data) => postsRequest.patch(`/${id}`, data, getToken())
+}

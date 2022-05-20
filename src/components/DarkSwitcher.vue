@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref, onBeforeMount } from 'vue';
-import IconSun from './icons/IconSun.vue';
-import IconMoon from './icons/IconMoon.vue';
+import { ref, onBeforeMount } from 'vue'
+import IconSun from './icons/IconSun.vue'
+import IconMoon from './icons/IconMoon.vue'
 
-const isDark = ref('light');
+const isDark = ref('light')
 
 onBeforeMount(() => {
   if (
@@ -11,19 +11,19 @@ onBeforeMount(() => {
     (!('theme' in localStorage) &&
       window.matchMedia('(prefers-color-scheme: dark)').matches)
   ) {
-    isDark.value = 'dark';
+    isDark.value = 'dark'
   }
-});
+})
 
 function toggleDarkMode() {
   if (isDark.value === 'light') {
-    isDark.value = 'dark';
-    localStorage.theme = 'dark';
-    document.documentElement.classList.add('dark');
+    isDark.value = 'dark'
+    localStorage.theme = 'dark'
+    document.documentElement.classList.add('dark')
   } else {
-    isDark.value = 'light';
-    localStorage.theme = 'light';
-    document.documentElement.classList.remove('dark');
+    isDark.value = 'light'
+    localStorage.theme = 'light'
+    document.documentElement.classList.remove('dark')
   }
 }
 </script>

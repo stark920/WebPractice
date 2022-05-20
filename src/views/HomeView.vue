@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import HeaderViewVue from './home/HeaderView.vue';
-import AsideView from './home/AsideView.vue';
-import ToolBarView from './home/ToolBarView.vue';
-import { onBeforeMount } from 'vue';
-import { useRouter } from 'vue-router';
-const router = useRouter();
+import HeaderViewVue from './home/HeaderView.vue'
+import AsideView from './home/AsideView.vue'
+import ToolBarView from './home/ToolBarView.vue'
+import { onBeforeMount } from 'vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 onBeforeMount(() => {
-  if (localStorage.getItem('metaWall')) return;
+  if (localStorage.getItem('metaWall')) return
 
-  router.replace({ name: 'signIn' });
-});
+  router.replace({ name: 'signIn' })
+})
 </script>
 
 <template>

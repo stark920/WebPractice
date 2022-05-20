@@ -1,44 +1,44 @@
 <script setup lang="ts">
-import TitleCard from '@/components/TitleCard.vue';
-import AvatarIcon from '@/components/AvatarIcon.vue';
-import { ref, reactive } from 'vue';
-const currentCard = ref('name');
-const validateMessage = ref(['']);
+import TitleCard from '@/components/TitleCard.vue'
+import AvatarIcon from '@/components/AvatarIcon.vue'
+import { ref, reactive } from 'vue'
+const currentCard = ref('name')
+const validateMessage = ref([''])
 const passwordObj = reactive({
   input1: '',
   input2: '',
   compareInputs() {
-    if (passwordObj.input1 !== passwordObj.input2) return ['密碼前後不一致'];
-    return false;
-  },
-});
-const pwdIsValid = ref(false);
+    if (passwordObj.input1 !== passwordObj.input2) return ['密碼前後不一致']
+    return false
+  }
+})
+const pwdIsValid = ref(false)
 
 function toggleDisplayCard(card: string) {
-  if (currentCard.value === card) return;
+  if (currentCard.value === card) return
   card === 'name'
     ? (currentCard.value = 'name')
-    : (currentCard.value = 'password');
-  validateMessage.value = [''];
-  passwordObj.input1 = '';
-  passwordObj.input2 = '';
+    : (currentCard.value = 'password')
+  validateMessage.value = ['']
+  passwordObj.input1 = ''
+  passwordObj.input2 = ''
 }
 
 function validateInputs() {
   validateMessage.value = [
     '1.圖片寬高比必需為 1:1，請重新輸入',
-    '2. 解析度寬度至少 300像素以上，請重新輸入',
-  ];
-  setTimeout(() => (validateMessage.value = ['']), 2000);
+    '2. 解析度寬度至少 300像素以上，請重新輸入'
+  ]
+  setTimeout(() => (validateMessage.value = ['']), 2000)
 }
 
 function validatePassword() {
   if (passwordObj.compareInputs()) {
-    validateMessage.value = ['密碼前後不一致'];
-    pwdIsValid.value = false;
+    validateMessage.value = ['密碼前後不一致']
+    pwdIsValid.value = false
   } else {
-    validateMessage.value = [''];
-    pwdIsValid.value = true;
+    validateMessage.value = ['']
+    pwdIsValid.value = true
   }
 }
 </script>
@@ -48,11 +48,11 @@ function validatePassword() {
   <div class="mt-8 flex px-4">
     <div>
       <input
+        id="name"
         class="peer hidden"
         type="radio"
         value="name"
         name="profile"
-        id="name"
         checked
         @click="toggleDisplayCard('name')" />
       <label
@@ -63,11 +63,11 @@ function validatePassword() {
     </div>
     <div>
       <input
+        id="password"
         class="peer hidden"
         type="radio"
         value="password"
         name="profile"
-        id="password"
         @click="toggleDisplayCard('password')" />
       <label
         for="password"
@@ -81,7 +81,7 @@ function validatePassword() {
     class="shadow-black-3px custom-border dark:dark-card flex flex-col items-center rounded-lg bg-white p-8">
     <AvatarIcon :size="107"></AvatarIcon>
     <div class="mt-5">
-      <input type="file" id="uploadAvatar" class="hidden" />
+      <input id="uploadAvatar" type="file" class="hidden" />
       <label
         for="uploadAvatar"
         class="inline-block cursor-pointer bg-black py-1 px-6 text-white"
@@ -100,15 +100,15 @@ function validatePassword() {
       <div>性別</div>
       <div class="flex items-center">
         <div class="flex items-center">
-          <input type="radio" name="gender" id="male" value="1" checked />
+          <input id="male" type="radio" name="gender" value="1" checked />
           <label for="male" class="ml-1">男性</label>
         </div>
         <div class="ml-4 flex items-center">
-          <input type="radio" name="gender" id="female" value="0" />
+          <input id="female" type="radio" name="gender" value="0" />
           <label for="female" class="ml-1">女性</label>
         </div>
         <div class="ml-4 flex items-center">
-          <input type="radio" name="gender" id="others" value="2" />
+          <input id="others" type="radio" name="gender" value="2" />
           <label for="others" class="ml-1">其他</label>
         </div>
       </div>
@@ -117,9 +117,9 @@ function validatePassword() {
       <div v-for="(msg, index) of validateMessage" :key="index">{{ msg }}</div>
     </div>
     <button
-      @click="validateInputs"
       type="button"
-      class="primary-color custom-border w-full max-w-[300px] rounded-lg py-3">
+      class="primary-color custom-border w-full max-w-[300px] rounded-lg py-3"
+      @click="validateInputs">
       送出更新
     </button>
   </div>
@@ -129,22 +129,22 @@ function validatePassword() {
     <div class="w-full max-w-[300px]">
       <label for="pwd" class="block">輸入新密碼</label>
       <input
-        @blur="validatePassword"
         id="pwd"
+        v-model="passwordObj.input1"
         type="password"
         class="custom-border w-full focus:border-primary dark:text-black"
         placeholder="請輸入新密碼"
-        v-model="passwordObj.input1" />
+        @blur="validatePassword" />
     </div>
     <div class="mt-5 w-full max-w-[300px]">
       <label for="pwd_double" class="block">再次輸入</label>
       <input
-        @blur="validatePassword"
         id="pwd_double"
+        v-model="passwordObj.input2"
         type="password"
         class="custom-border w-full focus:border-primary dark:text-black"
         placeholder="再次輸入新密碼"
-        v-model="passwordObj.input2" />
+        @blur="validatePassword" />
     </div>
     <div v-if="validateMessage" class="my-8 text-alert">
       <div v-for="(msg, index) of validateMessage" :key="index">{{ msg }}</div>
@@ -153,7 +153,7 @@ function validatePassword() {
       type="button"
       :class="{
         'primary-color border-black': pwdIsValid,
-        'border-gray-500 bg-gray-400 ': !pwdIsValid,
+        'border-gray-500 bg-gray-400 ': !pwdIsValid
       }"
       class="w-full max-w-[300px] rounded-lg border-2 py-3 text-white">
       重設密碼

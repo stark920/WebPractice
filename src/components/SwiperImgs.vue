@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import IconPlus from './icons/IconPlus.vue';
-import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Navigation, Pagination } from 'swiper';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { useLightBoxStore } from '@/stores/lightBox';
+import IconPlus from './icons/IconPlus.vue'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Navigation, Pagination } from 'swiper'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import { useLightBoxStore } from '@/stores/lightBox'
 
-const lightBox = useLightBoxStore();
-const modules = [Navigation, Pagination];
+const lightBox = useLightBoxStore()
+const modules = [Navigation, Pagination]
 </script>
 
 <template>
   <swiper
-    :preloadImages="false"
+    :preload-images="false"
     :init="false"
     :modules="modules"
     :slides-per-view="1"
     :navigation="true"
-    :centeredSlides="true"
+    :centered-slides="true"
     :pagination="{ clickable: true }"
     :class="{ fixed: lightBox.show, hidden: !lightBox.show }"
     class="top-0 bottom-0 left-0 right-0 z-50 bg-[rgba(0,0,0,0.8)]"

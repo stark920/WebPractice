@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import AvatarIcon from '@/components/AvatarIcon.vue';
-import DarkSwitcher from '@/components/DarkSwitcher.vue';
-import { useRouter } from 'vue-router';
-import { useUserStore } from '@/stores/user';
-const router = useRouter();
-const user = useUserStore();
+import AvatarIcon from '@/components/AvatarIcon.vue'
+import DarkSwitcher from '@/components/DarkSwitcher.vue'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user'
+const router = useRouter()
+const user = useUserStore()
 
 function signOut() {
-  localStorage.removeItem('metaWall');
-  user.clear();
-  router.push({ name: 'signIn' });
+  localStorage.removeItem('metaWall')
+  user.clear()
+  router.push({ name: 'signIn' })
 }
 </script>
 
@@ -34,7 +34,7 @@ function signOut() {
             class="cursor-pointer border-b-2 border-black font-azeret font-bold dark:border-gray-300">
             {{ user.name }}
           </label>
-          <input type="checkbox" class="peer hidden" id="sub-menu" />
+          <input id="sub-menu" type="checkbox" class="peer hidden" />
           <div
             class="dark:dark-card custom-border absolute right-0 top-[calc(100%+0.5rem)] hidden w-[180px] text-center peer-checked:grid">
             <router-link

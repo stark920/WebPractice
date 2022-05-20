@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import DarkSwitcher from '@/components/DarkSwitcher.vue';
-import { useRouter } from 'vue-router';
-import { useUserStore } from '@/stores/user';
-import { onBeforeMount } from 'vue';
-const router = useRouter();
-const user = useUserStore();
+import DarkSwitcher from '@/components/DarkSwitcher.vue'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user'
+import { onBeforeMount } from 'vue'
+const router = useRouter()
+const user = useUserStore()
 
 onBeforeMount(() => {
   if (user.name) {
-    router.replace({ name: 'home' });
+    router.replace({ name: 'home' })
   }
-});
+})
 </script>
 
 <template>

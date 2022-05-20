@@ -1,22 +1,26 @@
 <script setup lang="ts">
-import AvatarIcon from './AvatarIcon.vue';
+import AvatarIcon from './AvatarIcon.vue'
 
 interface Props {
-  size?: number;
-  avatar?: string;
-  title?: string;
-  subtitle?: string;
-  id?: string;
-}
-
-function toLink(id: string | undefined) {
-  if (id) return `/profile/${id}`;
-  return;
+  id: string
+  size: number
+  avatar: string
+  title: string
+  subtitle: string
 }
 
 withDefaults(defineProps<Props>(), {
+  id: '',
+  size: 45,
+  avatar: '',
   title: 'Unknown',
-});
+  subtitle: ''
+})
+
+function toLink(id: string | undefined) {
+  if (id) return `/profile/${id}`
+  return
+}
 </script>
 
 <template>

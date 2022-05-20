@@ -1,16 +1,16 @@
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'
 
 export const useLightBoxStore = defineStore({
   id: 'lightBox',
   state: () => ({
     show: false,
-    images: [''],
+    images: ['']
   }),
   getters: {},
   actions: {
     close() {
-      this.show = false;
-      this.images = [''];
-    },
-  },
-});
+      this.show = false
+      this.images = ['']
+    }
+  }
+})

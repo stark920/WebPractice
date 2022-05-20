@@ -1,59 +1,59 @@
 <script setup lang="ts">
-import IconSearch from '@/components/icons/IconSearch.vue';
-import PostCard from '@/components/PostCard.vue';
-import EmptyCard from '@/components/EmptyCard.vue';
-import PulsePostCard from '@/components/PulsePostCard.vue';
-import SwiperImgs from '@/components/SwiperImgs.vue';
-import { onMounted, ref } from 'vue';
-import { apiPost, checkToken } from '@/utils/axiosApi';
+import IconSearch from '@/components/icons/IconSearch.vue'
+import PostCard from '@/components/PostCard.vue'
+import EmptyCard from '@/components/EmptyCard.vue'
+import PulsePostCard from '@/components/PulsePostCard.vue'
+import SwiperImgs from '@/components/SwiperImgs.vue'
+import { onMounted, ref } from 'vue'
+import { apiPost, checkToken } from '@/utils/axiosApi'
 
-const postsLoading = ref(true);
+const postsLoading = ref(true)
 
 interface image {
-  url: string;
+  url: string
 }
 interface user {
-  _id: string;
-  name: string;
-  avatar: string | undefined;
+  _id: string
+  name: string
+  avatar: string | undefined
 }
 interface message {
-  _id: string;
-  createdAt: string;
-  content: string;
-  user: user;
+  _id: string
+  createdAt: string
+  content: string
+  user: user
 }
 interface post {
-  _id: string;
-  user: user;
-  content: string;
-  images: Array<image | null>;
-  createdAt: string;
-  likes: Array<string | null>;
-  comments?: Array<message>;
+  _id: string
+  user: user
+  content: string
+  images: Array<image | null>
+  createdAt: string
+  likes: Array<string | null>
+  comments?: Array<message>
 }
 
-let posts = ref<post[]>([]);
+let posts = ref<post[]>([])
 
 onMounted(() => {
-  if (!checkToken) return;
+  if (!checkToken) return
 
   apiPost.getAll('').then((res) => {
-    posts.value = res.data.data;
-    postsLoading.value = false;
-  });
-});
+    posts.value = res.data.data
+    postsLoading.value = false
+  })
+})
 
 function getImagesUrl(images: Array<image | null>) {
-  if (!images) return;
+  if (!images) return
 
-  const urls: string[] = [];
+  const urls: string[] = []
 
   images.forEach((image: image | null) => {
-    if (image?.url) urls.push(image.url);
-  });
+    if (image?.url) urls.push(image.url)
+  })
 
-  return urls;
+  return urls
 }
 </script>
 
@@ -62,25 +62,20 @@ function getImagesUrl(images: Array<image | null>) {
 
   <div class="mb-[100px] w-full md:mb-0">
     <div
-      class="mb-4 flex flex-wrap justify-between gap-x-0 gap-y-2 md:gap-x-4 md:gap-y-0"
-    >
+      class="mb-4 flex flex-wrap justify-between gap-x-0 gap-y-2 md:gap-x-4 md:gap-y-0">
       <select
-        class="dark:dark-card custom-border w-full px-3 py-1.5 font-azeret focus:border-primary md:w-3/12"
-      >
+        class="dark:dark-card custom-border w-full px-3 py-1.5 font-azeret focus:border-primary md:w-3/12">
         <option value="new" selected>最新貼文</option>
         <option value="hot">熱門貼文</option>
       </select>
       <div
-        class="dark:dark-card custom-border flex flex-1 items-center bg-primary"
-      >
+        class="dark:dark-card custom-border flex flex-1 items-center bg-primary">
         <input
           type="search"
           class="flex-1 border-0 px-3 py-1.5 focus:border-primary dark:bg-gray-700"
-          placeholder="搜尋貼文"
-        />
+          placeholder="搜尋貼文" />
         <div
-          class="flex h-full cursor-pointer items-center justify-center border-l-2 border-black bg-primary px-3 text-white dark:border-gray-600"
-        >
+          class="flex h-full cursor-pointer items-center justify-center border-l-2 border-black bg-primary px-3 text-white dark:border-gray-600">
           <IconSearch />
         </div>
       </div>
@@ -94,19 +89,17 @@ function getImagesUrl(images: Array<image | null>) {
     <div v-show="!postsLoading">
       <EmptyCard
         v-if="posts.length === 0"
-        content="目前尚無動態，新增一則貼文吧！"
-      ></EmptyCard>
+        content="目前尚無動態，新增一則貼文吧！"></EmptyCard>
 
-      <template v-else v-for="post of posts" :key="post._id">
+      <template v-for="po of posts" v-else :key="po._id">
         <PostCard
-          :id="post._id"
-          :name="post.user.name"
-          :createdAt="post.createdAt"
-          :content="post.content"
-          :avatar="post.user.avatar"
-          :images="getImagesUrl(post.images)"
-          :comments="post.comments"
-        />
+          :id="po._id"
+          :name="po.user.name"
+          :created-at="po.createdAt"
+          :content="po.content"
+          :avatar="po.user.avatar"
+          :images="getImagesUrl(po.images)"
+          :comments="po.comments" />
       </template>
 
       <EmptyCard content="沒有其他貼文了！"></EmptyCard>
