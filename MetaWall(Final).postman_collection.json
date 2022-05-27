@@ -765,13 +765,13 @@
 		{
 			"key": "path",
 			"value": "http://127.0.0.1:3005",
-			"type": "string"
+			"type": "string",
+			"disabled": true
 		},
 		{
 			"key": "path",
 			"value": "https://enigmatic-reef-71098.herokuapp.com",
-			"type": "string",
-			"disabled": true
+			"type": "string"
 		}
 	]
 }
